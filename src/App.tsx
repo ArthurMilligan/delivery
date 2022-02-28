@@ -1,25 +1,30 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useEffect, useState } from 'react';
+import AppHeader from './components/app-header/app-header';
+import BurgerConstructor from './components/burger-constructor/burger-constructor';
+import BurgerIngredients from './components/burger-Ingredients/burger-Ingredients';
+import style from './app.module.css'
 
 function App() {
+  const [cart, setCart] = useState([]);
+  const [isFetching,setIsFetching] = useState(true)
+  const [state, setState] = useState([]);
+  const dataUrl = 'https://norma.nomoreparties.space/api/ingredients'
+  useEffect(() => {
+    fetch(dataUrl)
+    .then(res=>res.json())
+    .then(res=>{
+      setState(res['data'])
+      setIsFetching(false)
+    })
+  }, [])
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    !isFetching?<>
+      <AppHeader className={style.header} />
+      <main className={style.main}>
+        <BurgerIngredients data={state} setCart={setCart} />
+        <BurgerConstructor data={state} cart={cart} />
+      </main>
+    </>:<div></div>
   );
 }
 
