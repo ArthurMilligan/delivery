@@ -1,57 +1,69 @@
 import { Button, CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
-import React from "react";
+import React, { useState } from "react";
 import ConstructorItem from "../constructor-item/constructor-item";
 import style from "./burger-constructor.module.css"
+import ModalOverlay from "../modal-overlay/modal-overlay";
+import Modal from "../../hocs/modal/modal";
+import OrderDetails from "../order-details/order-details";
+import PropTypes from 'prop-types';
 
 const BurgerConstructor = (props) => {
-  const data=[
-    {
-      text:"Краторная булка N-200i (верх)",
-      price:200,
-      thumbnail:"https://code.s3.yandex.net/react/code/bun-02-mobile.png",
-      isLocked:true,
-      type:"top",
-    },
-    {
-      text:"Краторная булка N-200i (верх)",
-      price:200,
-      thumbnail:"https://code.s3.yandex.net/react/code/bun-02-mobile.png",
-    },
-    {
-      text:"Краторная булка N-200i (верх)",
-      price:200,
-      thumbnail:"https://code.s3.yandex.net/react/code/bun-02-mobile.png",
 
-    },
-    {
-      text:"Краторная булка N-200i (верх)",
-      price:200,
-      thumbnail:"https://code.s3.yandex.net/react/code/bun-02-mobile.png",
-    },
-    {
-      text:"Краторная булка N-200i (низ)",
-      price:200,
-      thumbnail:"https://code.s3.yandex.net/react/code/bun-02-mobile.png",
-      isLocked:true,
-      type:"bottom",
-    }
-  ]
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const ModalOrderDetails = Modal(OrderDetails);
+
   return <section className={`${style.constructor} pl-10 pb-10 pt-25`}>
-    <div className={style.constructorList} style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-      {data.map(i=><ConstructorItem isLocked={i.isLocked}
-                            type={i.type}
-                            text={i.text}
-                            price={i.price}
-                            thumbnail={i.thumbnail}
-                            />)}
+    {isModalOpen && <>
+      <ModalOverlay setIsModalOpen={setIsModalOpen} />
+      <ModalOrderDetails setIsModalOpen={setIsModalOpen} />
+    </>}
+    <div className="mb-4">
+      <ConstructorItem
+        isLocked={true}
+        type='top'
+        text="Краторная булка N-200i (верх)"
+        price={200}
+        thumbnail="https://code.s3.yandex.net/react/code/bun-02.png"
+      />
+    </div>
+    <div className={style.constructorList}>
+      {props.constructorData.length
+        ? props.constructorData.map(i => <ConstructorItem
+          key={i.id}
+          id={i.id}
+          text={i.name}
+          price={i.price}
+          thumbnail={i.thumbnail}
+          setConstructorData={props.setConstructorData}
+          constructorData={props.constructorData}
+        />)
+        : <span>Добавте товар</span>}
+    </div>
+    <div className="mt-4">
+      <ConstructorItem
+        type="bottom"
+        isLocked={true}
+        text="Краторная булка N-200i (низ)"
+        price={200}
+        thumbnail="https://code.s3.yandex.net/react/code/bun-02.png"
+      />
     </div>
     <div className={`${style.order} mt-10`}>
       <div className={`${style.totalPrice} mr-10`}>
-        <span className="text text_type_digits-medium">600</span>
+        <span className="text text_type_digits-medium">{props.constructorData.reduce((acc, b) => acc + b.price, 0)}</span>
         <CurrencyIcon type="primary" />
       </div>
-      <Button type="primary" size="large">Оформить заказ</Button>
+      <Button onClick={() => { setIsModalOpen(true) }} type="primary" size="large">Оформить заказ</Button>
     </div>
   </section>
+}
+
+BurgerConstructor.propTypes={
+  constructorData: PropTypes.arrayOf(PropTypes.shape({
+    id:PropTypes.number.isRequired,
+    name:PropTypes.string.isRequired,
+    price:PropTypes.number.isRequired,
+    thumbnail:PropTypes.string.isRequired
+  }).isRequired).isRequired
 }
 export default BurgerConstructor

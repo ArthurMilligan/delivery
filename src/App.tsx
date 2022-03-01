@@ -5,27 +5,68 @@ import BurgerIngredients from './components/burger-Ingredients/burger-Ingredient
 import style from './app.module.css'
 
 function App() {
-  const [cart, setCart] = useState([]);
-  const [isFetching,setIsFetching] = useState(true)
+  const [constructorData, setConstructorData] = useState([
+    {
+      id:0,
+      name:"Филе Люминесцентного тетраодонтимформа",
+      price:988,
+      thumbnail:"https://code.s3.yandex.net/react/code/meat-03.png",
+    },
+    {
+      id:1,
+      name:"Мясо бессмертных моллюсков Protostomia",
+      price:1337,
+      thumbnail:"https://code.s3.yandex.net/react/code/meat-02.png",
+    },
+    {
+      id:2,
+      name:"Филе Люминесцентного тетраодонтимформа",
+      price:988,
+      thumbnail:"https://code.s3.yandex.net/react/code/meat-03.png",
+    },
+    {
+      id:3,
+      name:"Мясо бессмертных моллюсков Protostomia",
+      price:1337,
+      thumbnail:"https://code.s3.yandex.net/react/code/meat-02.png",
+    },
+    {
+      id:4,
+      name:"Филе Люминесцентного тетраодонтимформа",
+      price:988,
+      thumbnail:"https://code.s3.yandex.net/react/code/meat-03.png",
+    },
+  ]);
+
+  const [isFetching, setIsFetching] = useState(true);
   const [state, setState] = useState([]);
+  
+
   const dataUrl = 'https://norma.nomoreparties.space/api/ingredients'
+
   useEffect(() => {
-    fetch(dataUrl)
-    .then(res=>res.json())
-    .then(res=>{
-      setState(res['data'])
-      setIsFetching(false)
-    })
+    try{
+      fetch(dataUrl)
+      .then(res => res.json())
+      .then(res => {
+        setState(res['data'])
+        setIsFetching(false)
+      })
+    }catch{
+      alert('Ошибка(')
+    }
   }, [])
+  
   return (
-    !isFetching?<>
+    !isFetching ? <>
       <AppHeader className={style.header} />
       <main className={style.main}>
-        <BurgerIngredients data={state} setCart={setCart} />
-        <BurgerConstructor data={state} cart={cart} />
+        <BurgerIngredients data={state} constructorData={constructorData} />
+        <BurgerConstructor constructorData={constructorData} />
       </main>
-    </>:<div></div>
+    </> : <div></div>
   );
 }
+
 
 export default App;
