@@ -8,3 +8,8 @@
     margin-left:-350px;
     width:700px;
 }
+.icon{
+    position: absolute;
+    right:0;
+    top: 0;
+}
