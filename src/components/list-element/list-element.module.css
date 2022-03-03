@@ -1,0 +1,18 @@
+.item{
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+    width:40%;
+    position: relative;
+}
+.item div{
+    display: flex;
+    justify-content: center;
+}
+.name{
+    text-align: center;
+}
+.img{
+    width:240px ;
+    height: 120px;
+}

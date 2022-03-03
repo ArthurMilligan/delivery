@@ -1,0 +1,33 @@
+.header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height:64px;
+}
+.icon{
+    height: 24px;
+}
+.content{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.img{
+    width: 480px;
+    height: 240px;
+}
+li{
+    list-style-type: none;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    white-space: nowrap;
+}
+ul{
+    display: flex;
+    justify-content: center;
+}
+ul> * {
+    flex: 2;
+}
