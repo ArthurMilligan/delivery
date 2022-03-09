@@ -7,6 +7,7 @@ import { constructorDataType } from "../../utils/types";
 
 const ConstructorItem = (props) => {
     // const handleClose = () => props.setConstructorData(props.constructorData.filter(i => i.id !== props.id))
+    if(!props.thumbnail) console.log(props)
     return (
         <div className={`${props.type ? 'pl-8' : 'pl-2'} ${style.item} mb-4`}>
             {!props.type && (<DragIcon type="primary" />)}
@@ -28,6 +29,6 @@ ConstructorItem.propTypes = {
     text: PropTypes.string.isRequired,
     price: PropTypes.number.isRequired,
     thumbnail: PropTypes.string.isRequired,
-    id: PropTypes.number
+    id: PropTypes.string
 }
 export default ConstructorItem
