@@ -1,64 +1,95 @@
 import { Button, CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import ConstructorItem from "../constructor-item/constructor-item";
 import style from "./burger-constructor.module.css"
 import Modal from "../modal/modal";
 import OrderDetails from "../order-details/order-details";
-import { BurgerConstructorContextType } from "../../utils/types";
-import { BurgerConstructorContext } from "../../services/burger-constructor-context";
+import { useDispatch, useSelector } from "react-redux";
+import { useDrop } from "react-dnd";
 
 const BurgerConstructor = (props) => {
-
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const { constructorData, setConstructorData } = useContext(BurgerConstructorContext)
-  const [bun, setBun] = useState({});
+  const { ingredients, bun } = useSelector(store => store.cart)
+  const items = useSelector(store => store.items.items)
+  const dispatch = useDispatch();
+  const totalPrice = useSelector(store => store.cart.totalPrice)
+  const [{ isHover }, dropTarget] = useDrop({
+    accept: 'product',
+    drop(item) {
+      const element = items.find(i => i._id === item.id);
+      dispatch({
+        type: 'ADD_PRODUCT',
+        id: element._id,
+        name: element.name,
+        price: element.price,
+        thumbnail: element.image,
+        isBun: element.type === 'bun'
+      })
+    },
+    collect: monitor => ({
+      isHover: monitor.isOver(),
+    })
+  })
   useEffect(() => {
-    setBun(constructorData.filter(i => i.isBun === true)[0])
-  }, [constructorData])
+    dispatch({ type: 'GET_TOTAL_PRICE' })
+  }, [ingredients, bun])
+  // const styleDrop = {
+  //   borderColor:isHover ? 'lightgreen' : 'transparent',
+  //   borderWidth: '1px',
+  //   borderStyle:'solid'
+  // }
   return (
-    <section className={`${style.constructor} pl-10 pb-10 pt-25`}>
-      {isModalOpen && (<Modal setIsModalOpen={setIsModalOpen} ><OrderDetails/></Modal>)}
-      {constructorData.length&&Object.keys(bun).length
-        ? (<>
-          <div className="mb-4">
-            <ConstructorItem
+    <section className={`${style.constructor} ml-10 mb-10 mt-25`} ref={dropTarget}>
+      {isModalOpen && (<Modal setIsModalOpen={setIsModalOpen} ><OrderDetails /></Modal>)}
+      <>
+        <div className="mb-4">
+          {!!Object.keys(bun).length &&
+            (<ConstructorItem
               isLocked={true}
+              draggable={false}
               type='top'
               text={bun.name}
               price={bun.price}
               thumbnail={bun.thumbnail}
-            />
-          </div>
-          <div className={style.constructorList}>
-            {constructorData.map(i => {
+            />)
+          }
+        </div>
+        <div className={style.constructorList}  >
+          {ingredients.length
+            ?
+            (ingredients.map((i, index) => {
               if (!i.isBun) return (
                 <ConstructorItem
+                  draggable={true}
+                  index={index}
                   key={i.id}
                   id={i.id}
                   text={i.name}
-                  price={i.price}
+                  price={+i.price}
                   thumbnail={i.thumbnail}
-                  setConstructorData={setConstructorData}
-                  constructorData={constructorData}
+                  constructorData={ingredients}
                 />)
               else return null
-            })
-            }
-          </div>
-          <div className="mt-4">
-            <ConstructorItem
+            }))
+            : (<span>Добавте товар</span>)}
+        </div>
+        <div className="mt-4">
+          {!!Object.keys(bun).length &&
+            (<ConstructorItem
+              draggable={false}
               type="bottom"
               isLocked={true}
               text={bun.name}
               price={bun.price}
               thumbnail={bun.thumbnail}
-            />
-          </div>
-        </>)
-        : (<span>Добавте товар</span>)}
+            />)
+          }
+        </div>
+      </>
+
       <div className={`${style.order} mt-10`}>
         <div className={`${style.totalPrice} mr-10`}>
-          <span className="text text_type_digits-medium">{constructorData.reduce((acc, b) => acc + b.price, 0)}</span>
+          <span className="text text_type_digits-medium">{totalPrice}</span>
           <CurrencyIcon type="primary" />
         </div>
         <Button onClick={() => { setIsModalOpen(true) }} type="primary" size="large">Оформить заказ</Button>
@@ -67,8 +98,4 @@ const BurgerConstructor = (props) => {
   );
 }
 
-
-BurgerConstructor.propTypes = {
-  BurgerConstructorContext: BurgerConstructorContextType
-}
 export default BurgerConstructor

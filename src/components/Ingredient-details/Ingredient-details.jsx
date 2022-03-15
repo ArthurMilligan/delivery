@@ -1,8 +1,21 @@
-import React from "react";
+import React, { useEffect } from "react";
 import style from './Ingredient-details.module.css'
 import PropTypes from 'prop-types';
+import { useDispatch } from "react-redux";
 
-const IngredientDetails = (props) => {
+const IngredientDetails = ({ ...props }) => {
+    const dispatch = useDispatch()
+    useEffect(() => {
+        dispatch({
+            type: 'ADD_ITEM_INFORMATION',
+            name: props.name,
+            calories: props.calories,
+            proteins: props.proteins,
+            fat: props.fat,
+            carbohydrates: props.carbohydrates
+        })
+        return () => dispatch({ type: 'DELETE_ITEM_INFORMATION' })
+    }, [])
     return (
         <>
             <div className={`mr-10 mt-10 ml-10 ${style.header}`}>

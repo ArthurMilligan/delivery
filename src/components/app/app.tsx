@@ -2,52 +2,32 @@ import React, { useEffect, useState } from 'react';
 import AppHeader from '../app-header/app-header';
 import BurgerConstructor from '../burger-constructor/burger-constructor';
 import BurgerIngredients from '../burger-Ingredients/burger-Ingredients';
-import { BurgerConstructorContext } from '../../services/burger-constructor-context';
 import style from './app.module.css'
+import { useDispatch, useSelector, RootStateOrAny } from 'react-redux'
+import { getItems } from '../../services/actions/items-actions'
+import { DndProvider } from "react-dnd";
+import { HTML5Backend } from "react-dnd-html5-backend";
 
 function App() {
-  const [constructorData, setConstructorData] = useState([]);
+  const dispatch = useDispatch();
 
-  const [isFetching, setIsFetching] = useState(true);
-  const [state, setState] = useState([]);
-
-
-  const dataUrl = 'https://norma.nomoreparties.space/api/ingredients'
+  const responseStatus = useSelector((store: RootStateOrAny) => ({
+    itemsRequest: store.items.itemsRequest,
+    itemsRequestFailed: store.items.itemsRequestFailed
+  }))
 
   useEffect(() => {
-    try {
-      fetch(dataUrl)
-        .then(res => res.json())
-        .then(res => {
-          setState(res['data'])
-          return res
-        })
-        .then(res => {
-          setConstructorData(res['data'].map((i: any) => {
-            return {
-              id: i._id,
-              name: i.name,
-              price: i.price,
-              thumbnail: i.image,
-              isBun: i.type === 'bun' ? true : false
-            }
-          }))
-          setIsFetching(false)
-        })
-      
-    } catch {
-      alert('Ошибка(')
-    }
+    dispatch(getItems())
   }, [])
 
   return (
-    !isFetching ? (<>
+    !responseStatus.itemsRequest && !responseStatus.itemsRequestFailed ? (<>
       <AppHeader className={style.header} />
       <main className={style.main}>
-        <BurgerIngredients data={state} constructorData={constructorData} />
-        <BurgerConstructorContext.Provider value={{constructorData, setConstructorData}}>
+        <DndProvider backend={HTML5Backend}>
+          <BurgerIngredients />
           <BurgerConstructor />
-        </BurgerConstructorContext.Provider>
+        </DndProvider>
       </main>
     </>) : (<div></div>)
   );
