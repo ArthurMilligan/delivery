@@ -6,6 +6,7 @@ import Modal from "../modal/modal";
 import OrderDetails from "../order-details/order-details";
 import { useDispatch, useSelector } from "react-redux";
 import { useDrop } from "react-dnd";
+import { ADD_PRODUCT_ACTION_CREATOR, GET_TOTAL_PRICE } from "../../services/actions/cart-actions";
 
 const BurgerConstructor = (props) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -17,21 +18,16 @@ const BurgerConstructor = (props) => {
     accept: 'product',
     drop(item) {
       const element = items.find(i => i._id === item.id);
-      dispatch({
-        type: 'ADD_PRODUCT',
-        id: element._id,
-        name: element.name,
-        price: element.price,
-        thumbnail: element.image,
-        isBun: element.type === 'bun'
-      })
+      dispatch(
+        ADD_PRODUCT_ACTION_CREATOR(element._id, element.name, element.price, element.image, element.type)
+      )
     },
     collect: monitor => ({
       isHover: monitor.isOver(),
     })
   })
   useEffect(() => {
-    dispatch({ type: 'GET_TOTAL_PRICE' })
+    dispatch({ type: GET_TOTAL_PRICE })
   }, [ingredients, bun])
   // const styleDrop = {
   //   borderColor:isHover ? 'lightgreen' : 'transparent',
@@ -92,7 +88,9 @@ const BurgerConstructor = (props) => {
           <span className="text text_type_digits-medium">{totalPrice}</span>
           <CurrencyIcon type="primary" />
         </div>
-        <Button onClick={() => { setIsModalOpen(true) }} type="primary" size="large">Оформить заказ</Button>
+        {!!Object.keys(bun).length &&
+          (<Button onClick={() => { setIsModalOpen(true) }} type="primary" size="large">Оформить заказ</Button>)
+        }
       </div>
     </section>
   );

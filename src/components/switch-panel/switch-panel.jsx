@@ -4,13 +4,13 @@ import PropTypes from 'prop-types';
 const SwitchPanel = (props) => {
     return (
         <div style={{ display: 'flex' }}>
-            <Tab value="one" active={props.currentSwitchPanel === 0} onClick={props.setCurrentSwitchPanel}>
+            <Tab value={0} active={props.currentSwitchPanel === 0} onClick={props.setCurrentSwitchPanel}>
                 Булки
             </Tab>
-            <Tab value="two" active={props.currentSwitchPanel === 1} onClick={props.setCurrentSwitchPanel}>
+            <Tab value={1} active={props.currentSwitchPanel === 1} onClick={props.setCurrentSwitchPanel}>
                 Соусы
             </Tab>
-            <Tab value="three" active={props.currentSwitchPanel === 2} onClick={props.setCurrentSwitchPanel}>
+            <Tab value={2} active={props.currentSwitchPanel === 2} onClick={props.setCurrentSwitchPanel}>
                 Начинки
             </Tab>
         </div>

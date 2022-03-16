@@ -5,11 +5,12 @@ import PropTypes from 'prop-types';
 import { constructorDataType } from "../../utils/types";
 import { useDispatch } from "react-redux";
 import { useDrag, useDrop } from "react-dnd";
+import { DELETE_PRODUCT_ACTION_CREATOR, MOVE_PRODUCT_ACTION_CREATOR } from "../../services/actions/cart-actions";
 
 const ConstructorItem = (props) => {
     const ref = useRef(null);
     const dispatch = useDispatch()
-    const handleClose = () => dispatch({ type: 'DELETE_PRODUCT', id: props.id })
+    const handleClose = () => dispatch(DELETE_PRODUCT_ACTION_CREATOR( props.id ))
     const [, drop] = useDrop({
         accept: 'constructor',
         hover: (item, monitor) => {
@@ -31,7 +32,7 @@ const ConstructorItem = (props) => {
             if (dragIndex > hoverIndex && hoverClientY > hoverMiddleY) {
                 return;
             }
-            dispatch({ type: 'MOVE_PRODUCT', hoverIndex, dragIndex })
+            dispatch(MOVE_PRODUCT_ACTION_CREATOR(hoverIndex, dragIndex))
             item.index = hoverIndex
         }
     })
@@ -44,6 +45,16 @@ const ConstructorItem = (props) => {
             isDragging: monitor.isDragging()
         })
     })
+    const defineBun = (type)=>{
+        switch(type){
+            case 'top':
+                return ' (верх)'
+            case 'bottom':
+                return ' (низ)'
+            default:
+                return ''
+        }
+    }
     const opacity = isDragging ? 0 : 1
     drag(drop(ref));
     return (
@@ -51,7 +62,7 @@ const ConstructorItem = (props) => {
             {!props.type && (<DragIcon type="primary" />)}
             <ConstructorElement isLocked={props.isLocked}
                 type={props.type}
-                text={props.text}
+                text={`${props.text}`+ defineBun(props.type)}
                 price={props.price}
                 thumbnail={props.thumbnail}
                 handleClose={handleClose}
@@ -67,6 +78,6 @@ ConstructorItem.propTypes = {
     text: PropTypes.string.isRequired,
     price: PropTypes.number.isRequired,
     thumbnail: PropTypes.string.isRequired,
-    id: PropTypes.number
+    id: PropTypes.string
 }
 export default ConstructorItem

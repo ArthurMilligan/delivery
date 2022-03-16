@@ -1,4 +1,4 @@
-import { ADD_PRODUCT, DELETE_PRODUCT, MOVE_PRODUCT, GET_TOTAL_PRICE } from "../actions/cart-actions"
+import { ADD_PRODUCT, DELETE_PRODUCT, MOVE_PRODUCT, GET_TOTAL_PRICE,CLEAR_CART } from "../actions/cart-actions"
 
 const initialState = {
     bun: {},
@@ -8,6 +8,13 @@ const initialState = {
 
 export const cartReducer = (state = initialState, action) => {
     switch (action.type) {
+        case CLEAR_CART: {
+            return {
+                bun: {},
+                ingredients: [],
+                totalPrice: 0
+            }
+        }
         case MOVE_PRODUCT: {
             const newIngredients = [...state.ingredients],
                 dragProduct = state.ingredients[action.dragIndex]
@@ -25,8 +32,8 @@ export const cartReducer = (state = initialState, action) => {
                     ingredients: [
                         ...state.ingredients,
                         {
-                            id: state.ingredients.length,
-                            ingredient_id: action.id,
+                            id: action.id,
+                            ingredient_id: action.ingredient_id,
                             name: action.name,
                             price: action.price,
                             thumbnail: action.thumbnail,
@@ -38,7 +45,7 @@ export const cartReducer = (state = initialState, action) => {
                 return {
                     ...state,
                     bun: {
-                        ingredient_id: action.id,
+                        ingredient_id: action.ingredient_id,
                         name: action.name,
                         price: action.price,
                         thumbnail: action.thumbnail,
