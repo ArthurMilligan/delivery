@@ -1,8 +1,16 @@
-import React from "react";
+import React, { useEffect } from "react";
 import style from './Ingredient-details.module.css'
 import PropTypes from 'prop-types';
+import { useDispatch } from "react-redux";
+import { ADD_ITEM_INFORMATION_ACTION_CREATOR, DELETE_ITEM_INFORMATION } from "../../services/actions/modal-item-actions";
 
-const IngredientDetails = (props) => {
+
+const IngredientDetails = ({ ...props }) => {
+    const dispatch = useDispatch()
+    useEffect(() => {
+        dispatch(ADD_ITEM_INFORMATION_ACTION_CREATOR(props.name, props.calories, props.proteins, props.fat, props.carbohydrates))
+        return () => dispatch({ type: DELETE_ITEM_INFORMATION })
+    }, [])
     return (
         <>
             <div className={`mr-10 mt-10 ml-10 ${style.header}`}>

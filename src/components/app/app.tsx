@@ -3,66 +3,31 @@ import AppHeader from '../app-header/app-header';
 import BurgerConstructor from '../burger-constructor/burger-constructor';
 import BurgerIngredients from '../burger-Ingredients/burger-Ingredients';
 import style from './app.module.css'
+import { useDispatch, useSelector, RootStateOrAny } from 'react-redux'
+import { getItems } from '../../services/actions/items-actions'
+import { DndProvider } from "react-dnd";
+import { HTML5Backend } from "react-dnd-html5-backend";
 
 function App() {
-  const [constructorData, setConstructorData] = useState([
-    {
-      id: 0,
-      name: "Филе Люминесцентного тетраодонтимформа",
-      price: 988,
-      thumbnail: "https://code.s3.yandex.net/react/code/meat-03.png",
-    },
-    {
-      id: 1,
-      name: "Мясо бессмертных моллюсков Protostomia",
-      price: 1337,
-      thumbnail: "https://code.s3.yandex.net/react/code/meat-02.png",
-    },
-    {
-      id: 2,
-      name: "Филе Люминесцентного тетраодонтимформа",
-      price: 988,
-      thumbnail: "https://code.s3.yandex.net/react/code/meat-03.png",
-    },
-    {
-      id: 3,
-      name: "Мясо бессмертных моллюсков Protostomia",
-      price: 1337,
-      thumbnail: "https://code.s3.yandex.net/react/code/meat-02.png",
-    },
-    {
-      id: 4,
-      name: "Филе Люминесцентного тетраодонтимформа",
-      price: 988,
-      thumbnail: "https://code.s3.yandex.net/react/code/meat-03.png",
-    },
-  ]);
+  const dispatch = useDispatch();
 
-  const [isFetching, setIsFetching] = useState(true);
-  const [state, setState] = useState([]);
-
-
-  const dataUrl = 'https://norma.nomoreparties.space/api/ingredients'
+  const responseStatus = useSelector((store: RootStateOrAny) => ({
+    itemsRequest: store.items.itemsRequest,
+    itemsRequestFailed: store.items.itemsRequestFailed
+  }))
 
   useEffect(() => {
-    try {
-      fetch(dataUrl)
-        .then(res => res.json())
-        .then(res => {
-          setState(res['data'])
-          setIsFetching(false)
-        })
-    } catch {
-      alert('Ошибка(')
-    }
+    dispatch(getItems())
   }, [])
 
   return (
-    !isFetching ? (<>
+    !responseStatus.itemsRequest && !responseStatus.itemsRequestFailed ? (<>
       <AppHeader className={style.header} />
       <main className={style.main}>
-        <BurgerIngredients data={state} constructorData={constructorData} />
-        <BurgerConstructor constructorData={constructorData} />
+        <DndProvider backend={HTML5Backend}>
+          <BurgerIngredients />
+          <BurgerConstructor />
+        </DndProvider>
       </main>
     </>) : (<div></div>)
   );

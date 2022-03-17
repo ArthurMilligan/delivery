@@ -20,5 +20,14 @@ const dataType = PropTypes.arrayOf(PropTypes.shape({
     image_large: PropTypes.string.isRequired,
     __v: PropTypes.number.isRequired,
 })).isRequired
-
-export { constructorDataType, dataType }
+const BurgerConstructorContextType=PropTypes.shape({
+    constructorData:PropTypes.arrayOf(PropTypes.shape({
+        id: PropTypes.number.isRequired,
+        name: PropTypes.string.isRequired,
+        price: PropTypes.number.isRequired,
+        thumbnail: PropTypes.string.isRequired
+    }).isRequired),
+    setConstructorData:PropTypes.func
+})
+    
+export { constructorDataType, dataType, BurgerConstructorContextType}

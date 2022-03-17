@@ -3,9 +3,16 @@ import React from "react";
 import style from "./list-element.module.css";
 import PropTypes from 'prop-types';
 import { constructorDataType } from "../../utils/types";
+import { useSelector } from "react-redux";
+import { useDrag } from "react-dnd";
 
 const ListElement = (props) => {
-    const count = props.constructorData.reduce((acc, a) => a.name === props.name ? acc + 1 : acc, 0)
+    const [, dragRef] = useDrag({
+        type: 'product',
+        item: { id: props.id }
+    })
+    const cart = [...useSelector(store => store.cart.ingredients), useSelector(store => store.cart.bun)]
+    const count = cart.reduce((acc, a) => a.name === props.name ? acc + 1 : acc, 0)
     const onClickEvent = () => {
         props.setModal(true);
         props.setCurrentIngredient({
@@ -18,7 +25,7 @@ const ListElement = (props) => {
         })
     }
     return (
-        <div className={`${style.item} mb-8 mr-6 pr-4 pl-4`} onClick={() => { onClickEvent() }}>
+        <div className={`${style.item} mb-8 mr-6 pr-4 pl-4`} ref={dragRef} onClick={() => { onClickEvent() }}>
             {count > 0 && (<Counter count={count} size="default" />)}
             <img className={`${style.img} mb-1`} src={props.img} alt='burger' />
             <div>
@@ -31,7 +38,6 @@ const ListElement = (props) => {
 }
 
 ListElement.propTypes = {
-    constructorData: constructorDataType,
     setModal: PropTypes.func.isRequired,
     setCurrentIngredient: PropTypes.func.isRequired,
     imgLarge: PropTypes.string.isRequired,
