@@ -1,15 +1,14 @@
 import { Button, CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
-import React, { useEffect, useState } from "react";
+import { useEffect } from "react";
 import ConstructorItem from "../constructor-item/constructor-item";
 import style from "./burger-constructor.module.css"
-import Modal from "../modal/modal";
-import OrderDetails from "../order-details/order-details";
 import { useDispatch, useSelector } from "react-redux";
 import { useDrop } from "react-dnd";
 import { ADD_PRODUCT_ACTION_CREATOR, GET_TOTAL_PRICE } from "../../services/actions/cart-actions";
+import { NavLink, useLocation } from "react-router-dom";
 
 const BurgerConstructor = (props) => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const location = useLocation();
   const { ingredients, bun } = useSelector(store => store.cart)
   const items = useSelector(store => store.items.items)
   const dispatch = useDispatch();
@@ -28,7 +27,7 @@ const BurgerConstructor = (props) => {
   })
   useEffect(() => {
     dispatch({ type: GET_TOTAL_PRICE })
-  }, [ingredients, bun])
+  }, [ingredients, bun, dispatch])
   // const styleDrop = {
   //   borderColor:isHover ? 'lightgreen' : 'transparent',
   //   borderWidth: '1px',
@@ -36,7 +35,6 @@ const BurgerConstructor = (props) => {
   // }
   return (
     <section className={`${style.constructor} ml-10 mb-10 mt-25`} ref={dropTarget}>
-      {isModalOpen && (<Modal setIsModalOpen={setIsModalOpen} ><OrderDetails /></Modal>)}
       <>
         <div className="mb-4">
           {!!Object.keys(bun).length &&
@@ -89,7 +87,10 @@ const BurgerConstructor = (props) => {
           <CurrencyIcon type="primary" />
         </div>
         {!!Object.keys(bun).length &&
-          (<Button onClick={() => { setIsModalOpen(true) }} type="primary" size="large">Оформить заказ</Button>)
+          (<NavLink to={{
+            pathname: `/profile/order`,
+            state: { background: location }
+          }}><Button type="primary" size="large">Оформить заказ</Button></NavLink>)
         }
       </div>
     </section>

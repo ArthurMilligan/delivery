@@ -2,8 +2,11 @@
     display:flex;
     flex-direction: column;
     align-items: center;
-    width:40%;
     position: relative;
+    color:white
+}
+.link{
+    width:40%;
 }
 .item div{
     display: flex;

@@ -1,12 +1,20 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import AppHeader from '../app-header/app-header';
-import BurgerConstructor from '../burger-constructor/burger-constructor';
-import BurgerIngredients from '../burger-Ingredients/burger-Ingredients';
 import style from './app.module.css'
 import { useDispatch, useSelector, RootStateOrAny } from 'react-redux'
 import { getItems } from '../../services/actions/items-actions'
-import { DndProvider } from "react-dnd";
-import { HTML5Backend } from "react-dnd-html5-backend";
+import Profile from '../../pages/profile/profile';
+import SignIn from '../../pages/sign-in/sign-in';
+import Registration from '../../pages/registration/registration';
+import ForgotPassword from '../../pages/forgot-password/forgot-password';
+import ResetPassword from '../../pages/reset-password/reset-password';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
+import ProtectedRoute from '../protected-route/protected-route';
+import ProtectedRouteLogined from '../protected-route-logined/protected-route-logined';
+import IngredientDetails from '../Ingredient-details/Ingredient-details';
+import { ModalSwitch } from '../modal-switch/modal-switch';
+import NotFound404 from '../../pages/not-found-404/not-found-404';
+import Constructor from '../../pages/constructor/constructor';
 
 function App() {
   const dispatch = useDispatch();
@@ -22,16 +30,39 @@ function App() {
 
   return (
     !responseStatus.itemsRequest && !responseStatus.itemsRequestFailed ? (<>
-      <AppHeader className={style.header} />
-      <main className={style.main}>
-        <DndProvider backend={HTML5Backend}>
-          <BurgerIngredients />
-          <BurgerConstructor />
-        </DndProvider>
-      </main>
+      <Router>
+        <AppHeader className={style.header} />
+        <main className={style.main}>
+          <ModalSwitch>
+            <ProtectedRouteLogined path="/reset-password">
+              <ResetPassword />
+            </ProtectedRouteLogined>
+            <ProtectedRouteLogined path="/forgot-password">
+              <ForgotPassword />
+            </ProtectedRouteLogined>
+            <ProtectedRouteLogined path="/register">
+              <Registration />
+            </ProtectedRouteLogined>
+            <ProtectedRouteLogined path="/login">
+              <SignIn />
+            </ProtectedRouteLogined>
+            <ProtectedRoute path="/profile">
+              <Profile />
+            </ProtectedRoute>
+            <Route path='/ingredients/:id'>
+              <IngredientDetails />
+            </Route>
+            <Route path="/">
+              <Constructor/>
+            </Route>
+            <Route>
+              <NotFound404 />
+            </Route>
+          </ModalSwitch>
+        </main>
+      </Router>
     </>) : (<div></div>)
   );
 }
-
 
 export default App;
