@@ -21,7 +21,10 @@ const AppHeader = (props) => {
                         <span className={`${style.menuItemText} ml-2 text text_type_main-default text_color_inactive`}>Лента заказов</span>
                     </div>
                 </div>
-                <Logo />
+                <NavLink
+                    to={{ pathname: `/` }}>
+                    <Logo />
+                </NavLink>
                 <div className={`${style.menuItem} mr-8 pr-5 pl-5 ${style.lk}`}>
                     <ProfileIcon className={`${style.menuItemIcon} `} type="secondary" />
                     <NavLink

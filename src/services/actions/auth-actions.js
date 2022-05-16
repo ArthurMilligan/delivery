@@ -8,6 +8,7 @@ export const REGISTRATION_FAILED = "REGISTRATION_FAILED";
 export const LOGIN = "LOGIN"
 export const LOGIN_SUCCESS = "LOGIN_SUCCESS"
 export const LOGIN_FAILED = "LOGIN_FAILED"
+export const LOGIN_END = 'LOGIN_END'
 
 export const GET_USER_INFORMATION = 'GET_USER_INFORMATION'
 export const GET_USER_INFORMATION_SUCCESS = 'GET_USER_INFORMATION_SUCCESS'
@@ -46,7 +47,6 @@ export const registration = ({ email, password, name }) => dispatch => {
     })
         .then(checkResponse)
         .then(res => {
-            console.log(res)
             if (res && res.success) {
                 dispatch({
                     type: REGISTRATION_SUCCESS,
@@ -89,12 +89,14 @@ export const login = ({ email, password }) => dispatch => {
     })
         .then(checkResponse)
         .then(res => {
-            console.log(res)
             if (res && res.success) {
                 dispatch({
                     type: LOGIN_SUCCESS,
                     name: res.user.name,
                     email: res.user.email,
+                })
+                dispatch({
+                    type: LOGIN_END,
                 })
             } else {
                 dispatch({
@@ -211,7 +213,6 @@ export const updateToken = () => dispatch => {
     })
         .then(checkResponse)
         .then(res => {
-            console.log(res)
             if (res && res.success) {
                 dispatch({
                     type: UPDATE_TOKEN_SUCCESS,

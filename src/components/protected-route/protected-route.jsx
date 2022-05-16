@@ -1,10 +1,11 @@
 import { useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
-import { Redirect, Route } from "react-router-dom"
+import { Redirect, Route, useLocation } from "react-router-dom"
 import { getUserInformation, updateToken } from "../../services/actions/auth-actions"
 
 const ProtectedRoute = ({ children, ...rest }) => {
     const isAuth = useSelector(store => store.auth.isAuth)
+    const location = useLocation();
     const getUserStatusFailed = useSelector(store => store.auth.getUserInfo.getUserRequestFailed)
     const dispatch = useDispatch()
     useEffect(() => {
@@ -13,7 +14,7 @@ const ProtectedRoute = ({ children, ...rest }) => {
             dispatch(updateToken())
             dispatch(getUserInformation())
         }
-    }, [isAuth,dispatch,getUserStatusFailed])
+    }, [isAuth, dispatch, getUserStatusFailed])
     return (
         <Route
             {...rest}
@@ -21,7 +22,10 @@ const ProtectedRoute = ({ children, ...rest }) => {
                 children
             ) : (
                 <Redirect
-                    to='/login'
+                    to={{
+                        pathname: "/login",
+                        state: { from: location }
+                    }}
                 />
             )
             }

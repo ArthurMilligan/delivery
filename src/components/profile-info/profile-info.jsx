@@ -2,10 +2,13 @@ import { Button, Input } from "@ya.praktikum/react-developer-burger-ui-component
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { updateToken, updateUserInformation } from "../../services/actions/auth-actions";
+import Loading from "../loading/loading";
 
 const ProfileInfo = () => {
     const startData = useSelector(store => store.auth.userInformation)
     const updateStatusFailed = useSelector(store => store.auth.updateUserInfo.updateUserRequestFailed)
+    const isGetRequest = useSelector(store => store.auth.getUserInfo.getUserRequest)
+    const isUpdateRequest= useSelector(store => store.auth.updateUserInfo.updateUser) 
     const dispatch = useDispatch()
     const [userData, setUserData] = useState(startData)
     const [password, setPassword] = useState('')
@@ -25,7 +28,9 @@ const ProfileInfo = () => {
         dispatch(updateUserInformation({ ...userData, password }))
         setIsChanged(false)
     }
-
+    if(isGetRequest||isUpdateRequest){
+        return(<Loading/>)
+    }
     return (<>
         <div className="mb-6">
             <Input

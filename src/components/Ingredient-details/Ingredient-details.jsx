@@ -26,7 +26,7 @@ const IngredientDetails = ({ ...props }) => {
         return(<NotFound404/>)
     }
     return (ingredients.length?(
-        <>
+        <div className={style.mainBlock}>
             <div className={`mr-10 mt-10 ml-10 ${style.header}`}>
                 <span className="text text_type_main-large">Детали ингридиента</span>
             </div>
@@ -53,7 +53,7 @@ const IngredientDetails = ({ ...props }) => {
                     </li>
                 </ul>
             </div>
-        </>)
+        </div>)
         :(<div></div>)
     )
 }

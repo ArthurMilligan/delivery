@@ -1,4 +1,4 @@
-import { GET_USER_INFORMATION, GET_USER_INFORMATION_FAILED, GET_USER_INFORMATION_SUCCESS, LOGIN, LOGIN_FAILED, LOGIN_SUCCESS, LOGOUT, REGISTRATION, REGISTRATION_FAILED, REGISTRATION_SUCCESS, UPDATE_TOKEN, UPDATE_TOKEN_FAILED, UPDATE_TOKEN_SUCCESS, UPDATE_USER_INFORMATION, UPDATE_USER_INFORMATION_FAILED, UPDATE_USER_INFORMATION_SUCCESS } from "../actions/auth-actions"
+import { GET_USER_INFORMATION, GET_USER_INFORMATION_FAILED, GET_USER_INFORMATION_SUCCESS, LOGIN, LOGIN_END, LOGIN_FAILED, LOGIN_SUCCESS, LOGOUT, REGISTRATION, REGISTRATION_FAILED, REGISTRATION_SUCCESS, UPDATE_TOKEN, UPDATE_TOKEN_FAILED, UPDATE_TOKEN_SUCCESS, UPDATE_USER_INFORMATION, UPDATE_USER_INFORMATION_FAILED, UPDATE_USER_INFORMATION_SUCCESS } from "../actions/auth-actions"
 
 const initialState = {
     isAuth: false,
@@ -39,7 +39,6 @@ export const authReducer = (state = initialState, action) => {
                 }
             })
         case REGISTRATION_SUCCESS:
-            console.log('welcome!')
             return ({
                 ...state,
                 isAuth: true,
@@ -70,7 +69,6 @@ export const authReducer = (state = initialState, action) => {
                 }
             })
         case LOGIN_SUCCESS:
-            console.log('welcome!')
             return ({
                 ...state,
                 isAuth: true,
@@ -84,6 +82,16 @@ export const authReducer = (state = initialState, action) => {
                     name: action.name,
                 }
             })
+        case LOGIN_END:{
+            return ({
+                ...state,
+                loginInfo: {
+                    loginRequest: false,
+                    loginRequestFailed: false,
+                    loginRequestSuccess: false
+                }
+            })
+        }
         case LOGIN_FAILED:
             return ({
                 ...state,

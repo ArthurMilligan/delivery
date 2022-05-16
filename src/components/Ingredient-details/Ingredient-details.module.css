@@ -34,3 +34,7 @@
 .list> * {
     flex: 2;
 }
+.mainBlock{
+    display:flex;
+    flex-direction: column;
+}
