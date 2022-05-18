@@ -1,4 +1,4 @@
-import { ADD_PRODUCT, DELETE_PRODUCT, MOVE_PRODUCT, GET_TOTAL_PRICE,CLEAR_CART } from "../actions/cart-actions"
+import { ADD_PRODUCT, DELETE_PRODUCT, MOVE_PRODUCT, GET_TOTAL_PRICE, CLEAR_CART } from "../actions/cart-actions"
 
 const initialState = {
     bun: {},

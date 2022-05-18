@@ -2,7 +2,6 @@ import { ConstructorElement, DragIcon } from "@ya.praktikum/react-developer-burg
 import React, { useRef } from "react";
 import style from "./constructor-item.module.css";
 import PropTypes from 'prop-types';
-import { constructorDataType } from "../../utils/types";
 import { useDispatch } from "react-redux";
 import { useDrag, useDrop } from "react-dnd";
 import { DELETE_PRODUCT_ACTION_CREATOR, MOVE_PRODUCT_ACTION_CREATOR } from "../../services/actions/cart-actions";
@@ -10,7 +9,7 @@ import { DELETE_PRODUCT_ACTION_CREATOR, MOVE_PRODUCT_ACTION_CREATOR } from "../.
 const ConstructorItem = (props) => {
     const ref = useRef(null);
     const dispatch = useDispatch()
-    const handleClose = () => dispatch(DELETE_PRODUCT_ACTION_CREATOR( props.id ))
+    const handleClose = () => dispatch(DELETE_PRODUCT_ACTION_CREATOR(props.id))
     const [, drop] = useDrop({
         accept: 'constructor',
         hover: (item, monitor) => {
@@ -45,8 +44,8 @@ const ConstructorItem = (props) => {
             isDragging: monitor.isDragging()
         })
     })
-    const defineBun = (type)=>{
-        switch(type){
+    const defineBun = (type) => {
+        switch (type) {
             case 'top':
                 return ' (верх)'
             case 'bottom':
@@ -62,7 +61,7 @@ const ConstructorItem = (props) => {
             {!props.type && (<DragIcon type="primary" />)}
             <ConstructorElement isLocked={props.isLocked}
                 type={props.type}
-                text={`${props.text}`+ defineBun(props.type)}
+                text={`${props.text}` + defineBun(props.type)}
                 price={props.price}
                 thumbnail={props.thumbnail}
                 handleClose={handleClose}

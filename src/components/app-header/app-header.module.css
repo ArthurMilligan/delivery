@@ -25,4 +25,10 @@
     align-items: center;
     background: #1C1C21;
 }
+.menuItemText{
+    text-decoration: none;
+}
+.active{
+    color:white;
+}
 
