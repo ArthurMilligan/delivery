@@ -1,4 +1,4 @@
-import { Component, FC, useEffect, ReactNode, ReactChild } from 'react';
+import {  FC, useEffect, ReactChild } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Redirect, Route, useLocation } from 'react-router-dom';
 import {

@@ -2,7 +2,7 @@ import {
   Button,
   Input,
 } from '@ya.praktikum/react-developer-burger-ui-components';
-import { FC, useState } from 'react';
+import { ChangeEvent, FC, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   updateToken,
@@ -55,7 +55,7 @@ const ProfileInfo: FC = () => {
         <Input
           type={'text'}
           placeholder={'Имя'}
-          onChange={(e) => {
+          onChange={(e:ChangeEvent<HTMLInputElement>) => {
             setUserData({ ...userData, name: e.target.value });
             setIsChanged(true);
           }}
@@ -71,7 +71,7 @@ const ProfileInfo: FC = () => {
         <Input
           type={'email'}
           placeholder={'Логин'}
-          onChange={(e) => {
+          onChange={(e:ChangeEvent<HTMLInputElement>) => {
             setUserData({ ...userData, email: e.target.value });
             setIsChanged(true);
           }}
@@ -87,7 +87,7 @@ const ProfileInfo: FC = () => {
         <Input
           type={'password'}
           placeholder={'Пароль'}
-          onChange={(e) => {
+          onChange={(e:ChangeEvent<HTMLInputElement>) => {
             setPassword(e.target.value);
             setIsChanged(true);
           }}
