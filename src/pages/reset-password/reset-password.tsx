@@ -2,7 +2,7 @@ import {
   Input,
   Button,
 } from '@ya.praktikum/react-developer-burger-ui-components';
-import { FC, useCallback, useState } from 'react';
+import { FC, useCallback, useState, ChangeEvent, MouseEvent } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Redirect, Route, useHistory, useLocation } from 'react-router-dom';
 import Loading from '../../components/loading/loading';
@@ -28,7 +28,7 @@ const ResetPassword: FC = () => {
   const loginOnClick = useCallback(() => {
     history.replace({ pathname: '/login' });
   }, [history]);
-  const resetOnSubmit = (e: any) => {
+  const resetOnSubmit = (e: MouseEvent<HTMLFormElement>) => {
     e.preventDefault();
     dispatch(resetPassword({ ...resetData }));
   };
@@ -55,7 +55,7 @@ const ResetPassword: FC = () => {
       ) : (
         <div className={Styles.resetPasswordBlock}>
           <h1 className='text text_type_main-medium'>Восстановление пароля</h1>
-          <form className={Styles.resetForm} onSubmit={(e) => resetOnSubmit(e)}>
+          <form className={Styles.resetForm} onSubmit={(e:MouseEvent<HTMLFormElement>) => resetOnSubmit(e)}>
             <div className='mt-6'>
               <Input
                 type={visiblePassword ? 'text' : 'password'}
@@ -66,7 +66,7 @@ const ResetPassword: FC = () => {
                 size={'default'}
                 icon={visiblePassword ? 'HideIcon' : 'ShowIcon'}
                 value={resetData.password}
-                onChange={(e) =>
+                onChange={(e:ChangeEvent<HTMLInputElement>) =>
                   setResetData({ ...resetData, password: e.target.value })
                 }
                 onIconClick={() => setVisiblePassword(!visiblePassword)}
@@ -81,7 +81,7 @@ const ResetPassword: FC = () => {
                 errorText={'Ошибка'}
                 size={'default'}
                 value={resetData.token}
-                onChange={(e) =>
+                onChange={(e:ChangeEvent<HTMLInputElement>) =>
                   setResetData({ ...resetData, token: e.target.value })
                 }
               />

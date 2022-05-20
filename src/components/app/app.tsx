@@ -1,7 +1,7 @@
 import { FC, useEffect } from 'react';
 import AppHeader from '../app-header/app-header';
 import style from './app.module.css';
-import { useDispatch, useSelector, RootStateOrAny } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { getItems } from '../../services/actions/items-actions';
 import Profile from '../../pages/profile/profile';
 import SignIn from '../../pages/sign-in/sign-in';

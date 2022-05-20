@@ -15,7 +15,7 @@ export const ModalSwitch: FC<IModalSwitchProps> = ({ children }) => {
   };
   const location = useLocation<ILocationState>();
   const match = useRouteMatch('/profile/:orderNumber');
-  const background = location.state && location.state.background;
+  const background = location && location.state && location.state.background;
   return (
     <>
       <Switch location={background || location}>{children}</Switch>

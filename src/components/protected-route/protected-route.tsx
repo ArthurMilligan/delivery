@@ -1,13 +1,13 @@
-import { FC, useEffect } from 'react';
+import { Component, FC, useEffect, ReactNode, ReactChild } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Redirect, Route, useLocation } from 'react-router-dom';
 import {
   getUserInformation,
   updateToken,
 } from '../../services/actions/auth-actions';
-import { IProtectedRouteProps } from '../../utils/types';
+import {RouteProps} from 'react-router'
 
-const ProtectedRoute: FC<IProtectedRouteProps> = ({ children, ...rest }) => {
+const ProtectedRoute: FC<RouteProps&{children:ReactChild}> = ({ children, ...rest }) => {
   const isAuth: boolean = useSelector((store: any) => store.auth.isAuth);
   const location = useLocation();
   const getUserStatusFailed: boolean = useSelector(
@@ -20,7 +20,7 @@ const ProtectedRoute: FC<IProtectedRouteProps> = ({ children, ...rest }) => {
       dispatch(updateToken());
       dispatch(getUserInformation());
     }
-  }, [isAuth, dispatch, getUserStatusFailed]);
+  }, []);
   return (
     <Route
       {...rest}

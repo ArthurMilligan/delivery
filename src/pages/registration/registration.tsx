@@ -3,7 +3,7 @@ import {
   Button,
   PasswordInput,
 } from '@ya.praktikum/react-developer-burger-ui-components';
-import { useCallback, useState } from 'react';
+import { useCallback, useState, MouseEvent, ChangeEvent } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import Loading from '../../components/loading/loading';
@@ -25,7 +25,7 @@ const Registration = () => {
     password: '',
     name: '',
   });
-  const registrationOnSubmit = (e: any) => {
+  const registrationOnSubmit = (e: MouseEvent<HTMLFormElement>) => {
     e.preventDefault();
     dispatch(registration({ ...registrationData }));
   };
@@ -37,11 +37,11 @@ const Registration = () => {
       <h1 className='text text_type_main-medium'>Регистрация</h1>
       <form
         className={Styles.registrationForm}
-        onSubmit={(e) => registrationOnSubmit(e)}
+        onSubmit={(e:MouseEvent<HTMLFormElement>) => registrationOnSubmit(e)}
       >
         <div className='mt-6'>
           <Input
-            onChange={(e) =>
+            onChange={(e:ChangeEvent<HTMLInputElement>) =>
               setRegistrationData({ ...registrationData, name: e.target.value })
             }
             value={registrationData.name}
@@ -55,7 +55,7 @@ const Registration = () => {
         </div>
         <div className='mt-6'>
           <Input
-            onChange={(e) =>
+            onChange={(e:ChangeEvent<HTMLInputElement>) =>
               setRegistrationData({
                 ...registrationData,
                 email: e.target.value,
@@ -74,7 +74,7 @@ const Registration = () => {
           <PasswordInput
             value={registrationData.password}
             name={'password'}
-            onChange={(e) =>
+            onChange={(e:ChangeEvent<HTMLInputElement>) =>
               setRegistrationData({
                 ...registrationData,
                 password: e.target.value,

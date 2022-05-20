@@ -1,4 +1,4 @@
-import React, { FC, useRef, useState } from 'react';
+import React, { FC, useRef, useState, UIEvent } from 'react';
 import SwitchPanel from '../switch-panel/switch-panel';
 import ListElement from '../list-element/list-element';
 import style from './burger-Ingredients.module.css';
@@ -13,7 +13,7 @@ const BurgerIngredients: FC = (props) => {
   const sauces = useRef<HTMLInputElement>(null);
   const mains = useRef<HTMLInputElement>(null);
 
-  const handleScroll = (e: any) => {
+  const handleScroll = (e:UIEvent<HTMLDivElement>) => {
     const tmp = [buns, sauces, mains];
     let current = '',
       flag = 10000;

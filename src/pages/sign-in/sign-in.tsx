@@ -3,7 +3,7 @@ import {
   Input,
   PasswordInput,
 } from '@ya.praktikum/react-developer-burger-ui-components';
-import { FC, useCallback, useState } from 'react';
+import { FC, useCallback, useState, MouseEvent, ChangeEvent } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import Loading from '../../components/loading/loading';
@@ -28,7 +28,7 @@ const SignIn: FC = () => {
   const forgotPasswordOnClick = useCallback(() => {
     history.replace({ pathname: '/forgot-password' });
   }, [history]);
-  const loginOnSubmit = (e: any) => {
+  const loginOnSubmit = (e: MouseEvent<HTMLFormElement>) => {
     e.preventDefault();
     dispatch(login({ ...loginData }));
   };
@@ -39,10 +39,10 @@ const SignIn: FC = () => {
   return (
     <div className={Styles.signInBlock}>
       <h1 className='text text_type_main-medium'>Вход</h1>
-      <form className={Styles.signInForm} onSubmit={(e) => loginOnSubmit(e)}>
+      <form className={Styles.signInForm} onSubmit={(e:MouseEvent<HTMLFormElement>) => loginOnSubmit(e)}>
         <div className='mt-6'>
           <Input
-            onChange={(e) =>
+            onChange={(e:ChangeEvent<HTMLInputElement>) =>
               setLoginData({ ...loginData, email: e.target.value })
             }
             value={loginData.email}
@@ -56,7 +56,7 @@ const SignIn: FC = () => {
         </div>
         <div className='mt-6'>
           <PasswordInput
-            onChange={(e) =>
+            onChange={(e:ChangeEvent<HTMLInputElement>) =>
               setLoginData({ ...loginData, password: e.target.value })
             }
             value={loginData.password}
