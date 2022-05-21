@@ -57,7 +57,7 @@ const App: FC = () => {
                 <Route path='/ingredients/:id'>
                   <IngredientDetails />
                 </Route>
-                <Route path='/'>
+                <Route exact={true} path='/'>
                   <Constructor />
                 </Route>
                 <Route>

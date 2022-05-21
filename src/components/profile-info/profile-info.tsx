@@ -35,8 +35,7 @@ const ProfileInfo: FC = () => {
   }
 
   const cancelOnClick = () => {
-    setUserData({ ...userData, name: userData.name });
-    setUserData({ ...userData, email: userData.email });
+    setUserData({ ...userData, ...startData});
     setPassword('');
     setIsChanged(false);
   };
