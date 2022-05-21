@@ -3,7 +3,7 @@ import {
   Button,
   PasswordInput,
 } from '@ya.praktikum/react-developer-burger-ui-components';
-import { useCallback, useState, MouseEvent, ChangeEvent } from 'react';
+import { useCallback, useState, FormEvent, ChangeEvent } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import Loading from '../../components/loading/loading';
@@ -25,7 +25,7 @@ const Registration = () => {
     password: '',
     name: '',
   });
-  const registrationOnSubmit = (e: MouseEvent<HTMLFormElement>) => {
+  const registrationOnSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     dispatch(registration({ ...registrationData }));
   };
@@ -37,7 +37,7 @@ const Registration = () => {
       <h1 className='text text_type_main-medium'>Регистрация</h1>
       <form
         className={Styles.registrationForm}
-        onSubmit={(e:MouseEvent<HTMLFormElement>) => registrationOnSubmit(e)}
+        onSubmit={registrationOnSubmit}
       >
         <div className='mt-6'>
           <Input

@@ -2,7 +2,7 @@ import {
   Input,
   Button,
 } from '@ya.praktikum/react-developer-burger-ui-components';
-import { FC, useCallback, useState, ChangeEvent, MouseEvent } from 'react';
+import { FC, useCallback, useState, ChangeEvent, FormEvent } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Redirect, Route, useHistory, useLocation } from 'react-router-dom';
 import Loading from '../../components/loading/loading';
@@ -28,7 +28,7 @@ const ResetPassword: FC = () => {
   const loginOnClick = useCallback(() => {
     history.replace({ pathname: '/login' });
   }, [history]);
-  const resetOnSubmit = (e: MouseEvent<HTMLFormElement>) => {
+  const resetOnSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     dispatch(resetPassword({ ...resetData }));
   };
@@ -55,7 +55,7 @@ const ResetPassword: FC = () => {
       ) : (
         <div className={Styles.resetPasswordBlock}>
           <h1 className='text text_type_main-medium'>Восстановление пароля</h1>
-          <form className={Styles.resetForm} onSubmit={(e:MouseEvent<HTMLFormElement>) => resetOnSubmit(e)}>
+          <form className={Styles.resetForm} onSubmit={resetOnSubmit}>
             <div className='mt-6'>
               <Input
                 type={visiblePassword ? 'text' : 'password'}

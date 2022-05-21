@@ -2,7 +2,7 @@ import {
   Input,
   Button,
 } from '@ya.praktikum/react-developer-burger-ui-components';
-import { ChangeEvent, FC, MouseEvent, useCallback, useState } from 'react';
+import { ChangeEvent, FC, FormEvent, useCallback, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Redirect, Route, useHistory, useLocation } from 'react-router-dom';
 import Loading from '../../components/loading/loading';
@@ -23,7 +23,7 @@ const ForgotPassword: FC = () => {
   const loginOnClick = useCallback(() => {
     history.replace({ pathname: '/login' });
   }, [history]);
-  const resetOnSubmit = (e: MouseEvent<HTMLFormElement>) => {
+  const resetOnSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     dispatch(forgotPassword(email));
   };
@@ -44,7 +44,7 @@ const ForgotPassword: FC = () => {
           <h1 className='text text_type_main-medium'>Восстановление пароля</h1>
           <form
             className={Styles.forgotForm}
-            onSubmit={(e:MouseEvent<HTMLFormElement>) => resetOnSubmit(e)}
+            onSubmit={resetOnSubmit}
           >
             <div className='mt-6'>
               <Input
