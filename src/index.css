@@ -7,10 +7,10 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-#modal{
-  display:flex;
+#modal {
+  display: flex;
   align-items: center;
-  justify-content: center
+  justify-content: center;
 }
 
 code {

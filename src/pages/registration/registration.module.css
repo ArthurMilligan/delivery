@@ -1,11 +1,11 @@
-.registrationBlock{
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-    margin-top: 200px
+.registrationBlock {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  margin-top: 200px;
 }
-.registrationForm{
-    display: flex;
-    align-items: center;
-    flex-direction: column;
+.registrationForm {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
 }

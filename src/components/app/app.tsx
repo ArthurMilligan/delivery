@@ -1,8 +1,8 @@
-import { useEffect } from 'react';
+import { FC, useEffect } from 'react';
 import AppHeader from '../app-header/app-header';
-import style from './app.module.css'
-import { useDispatch, useSelector, RootStateOrAny } from 'react-redux'
-import { getItems } from '../../services/actions/items-actions'
+import style from './app.module.css';
+import { useDispatch, useSelector } from 'react-redux';
+import { getItems } from '../../services/actions/items-actions';
 import Profile from '../../pages/profile/profile';
 import SignIn from '../../pages/sign-in/sign-in';
 import Registration from '../../pages/registration/registration';
@@ -15,55 +15,63 @@ import IngredientDetails from '../Ingredient-details/Ingredient-details';
 import { ModalSwitch } from '../modal-switch/modal-switch';
 import NotFound404 from '../../pages/not-found-404/not-found-404';
 import Constructor from '../../pages/constructor/constructor';
-
-
-function App() {
+export interface IResponseStatus {
+  itemsRequest: boolean;
+  itemsRequestFailed: boolean;
+}
+const App: FC = () => {
   const dispatch = useDispatch();
 
-  const responseStatus = useSelector((store: RootStateOrAny) => ({
+  const responseStatus: IResponseStatus = useSelector((store: any) => ({
     itemsRequest: store.items.itemsRequest,
-    itemsRequestFailed: store.items.itemsRequestFailed
-  }))
+    itemsRequestFailed: store.items.itemsRequestFailed,
+  }));
 
   useEffect(() => {
-    dispatch(getItems())
-  }, [])
+    dispatch(getItems());
+  }, []);
 
   return (
-    !responseStatus.itemsRequest && !responseStatus.itemsRequestFailed ? (<>
-      <Router>
-        <AppHeader className={style.header} />
-        <main className={style.main}>
-          <ModalSwitch>
-            <ProtectedRouteLogined path="/reset-password">
-              <ResetPassword />
-            </ProtectedRouteLogined>
-            <ProtectedRouteLogined path="/forgot-password">
-              <ForgotPassword />
-            </ProtectedRouteLogined>
-            <ProtectedRouteLogined path="/register">
-              <Registration />
-            </ProtectedRouteLogined>
-            <ProtectedRouteLogined path="/login">
-              <SignIn />
-            </ProtectedRouteLogined>
-            <ProtectedRoute path="/profile">
-              <Profile />
-            </ProtectedRoute>
-            <Route path='/ingredients/:id'>
-              <IngredientDetails />
-            </Route>
-            <Route path="/">
-              <Constructor/>
-            </Route>
-            <Route>
-              <NotFound404 />
-            </Route>
-          </ModalSwitch>
-        </main>
-      </Router>
-    </>) : (<div></div>)
+    <>
+      {!responseStatus.itemsRequest && !responseStatus.itemsRequestFailed ? (
+        <>
+          <Router>
+            <AppHeader />
+            <main className={style.main}>
+              <ModalSwitch>
+                <ProtectedRouteLogined path='/reset-password'>
+                  <ResetPassword />
+                </ProtectedRouteLogined>
+                <ProtectedRouteLogined path='/forgot-password'>
+                  <ForgotPassword />
+                </ProtectedRouteLogined>
+                <ProtectedRouteLogined path='/register'>
+                  <Registration />
+                </ProtectedRouteLogined>
+                <ProtectedRouteLogined path='/login'>
+                  <SignIn />
+                </ProtectedRouteLogined>
+                <ProtectedRoute path='/profile'>
+                  <Profile />
+                </ProtectedRoute>
+                <Route path='/ingredients/:id'>
+                  <IngredientDetails />
+                </Route>
+                <Route exact={true} path='/'>
+                  <Constructor />
+                </Route>
+                <Route>
+                  <NotFound404 />
+                </Route>
+              </ModalSwitch>
+            </main>
+          </Router>
+        </>
+      ) : (
+        <div>(((</div>
+      )}
+    </>
   );
-}
+};
 
 export default App;

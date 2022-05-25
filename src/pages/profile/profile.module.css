@@ -1,12 +1,12 @@
-.Profile{
-    display: grid;
-    grid-template-areas:
-    "nav block"
-    "nav block"
-    "description block";
-    grid-template-columns: 1fr 2fr;
-    margin-top:120px;
+.Profile {
+  display: grid;
+  grid-template-areas:
+    'nav block'
+    'nav block'
+    'description block';
+  grid-template-columns: 1fr 2fr;
+  margin-top: 120px;
 }
-.changeProfileBlock{
-    grid-area: "block";
+.changeProfileBlock {
+  grid-area: 'block';
 }

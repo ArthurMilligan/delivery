@@ -1,40 +1,40 @@
-.header{
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    height:64px;
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 64px;
 }
-.icon{
-    height: 24px;
+.icon {
+  height: 24px;
 }
-.content{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+.content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
-.img{
-    width: 480px;
-    height: 240px;
+.img {
+  width: 480px;
+  height: 240px;
 }
-.listElement{
-    list-style-type: none;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    text-align: center;
-    white-space: nowrap;
-    align-items: center
+.listElement {
+  list-style-type: none;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+  white-space: nowrap;
+  align-items: center;
 }
-.list{
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center
+.list {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
 }
-.list> * {
-    flex: 2;
+.list > * {
+  flex: 2;
 }
-.mainBlock{
-    display:flex;
-    flex-direction: column;
+.mainBlock {
+  display: flex;
+  flex-direction: column;
 }
