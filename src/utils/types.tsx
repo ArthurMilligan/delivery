@@ -1,6 +1,19 @@
 import { Location } from 'history';
 import { SetStateAction } from 'react';
 
+export interface ImapIngredient {
+  id: string;
+  count: number;
+}
+export interface IOrderProps {
+  orderNumber: number;
+  orderDate: Date;
+  burgerName: string;
+  burgerIngredientsId: Array<string>;
+  id: string;
+  redirect: string;
+  status?:string
+}
 export interface IResetPasswordState {
   password: string;
   token: string;

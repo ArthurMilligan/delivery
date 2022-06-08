@@ -1,10 +1,6 @@
-import {
-  Button,
-  Input,
-  PasswordInput,
-} from '@ya.praktikum/react-developer-burger-ui-components';
+import { Button, Input, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
 import { FC, useCallback, useState, FormEvent, ChangeEvent } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from '../../services/types/hooks';
 import { useHistory } from 'react-router-dom';
 import Loading from '../../components/loading/loading';
 import { login } from '../../services/actions/auth-actions';
@@ -14,9 +10,7 @@ import Styles from './sign-in.module.css';
 const SignIn: FC = () => {
   const history = useHistory();
   const dispatch = useDispatch();
-  const isRequest: boolean = useSelector(
-    (store: any) => store.auth.loginInfo.loginRequest
-  );
+  const isRequest: boolean = useSelector((store) => store.auth.loginInfo.loginRequest);
   const [loginData, setLoginData] = useState<ISignInState>({
     email: '',
     password: '',
@@ -42,9 +36,7 @@ const SignIn: FC = () => {
       <form className={Styles.signInForm} onSubmit={loginOnSubmit}>
         <div className='mt-6'>
           <Input
-            onChange={(e:ChangeEvent<HTMLInputElement>) =>
-              setLoginData({ ...loginData, email: e.target.value })
-            }
+            onChange={(e: ChangeEvent<HTMLInputElement>) => setLoginData({ ...loginData, email: e.target.value })}
             value={loginData.email}
             type={'email'}
             placeholder={'Email'}
@@ -56,9 +48,7 @@ const SignIn: FC = () => {
         </div>
         <div className='mt-6'>
           <PasswordInput
-            onChange={(e:ChangeEvent<HTMLInputElement>) =>
-              setLoginData({ ...loginData, password: e.target.value })
-            }
+            onChange={(e: ChangeEvent<HTMLInputElement>) => setLoginData({ ...loginData, password: e.target.value })}
             value={loginData.password}
             name={'password'}
           />
@@ -70,17 +60,13 @@ const SignIn: FC = () => {
         </div>
       </form>
       <div className='mt-20'>
-        <span className='text text_type_main-default text_color_inactive'>
-          Вы — новый пользователь?
-        </span>
+        <span className='text text_type_main-default text_color_inactive'>Вы — новый пользователь?</span>
         <Button type='secondary' size='medium' onClick={registerOnClick}>
           Зарегистрироваться
         </Button>
       </div>
       <div className='mt-4'>
-        <span className='text text_type_main-default text_color_inactive'>
-          Забыли пароль?
-        </span>
+        <span className='text text_type_main-default text_color_inactive'>Забыли пароль?</span>
 
         <Button type='secondary' size='medium' onClick={forgotPasswordOnClick}>
           Восстановить пароль

@@ -1,12 +1,12 @@
 import { FC } from 'react';
-import { useRouteMatch } from 'react-router-dom';
 import { Route, Switch, useHistory } from 'react-router-dom';
-import { useLocation } from 'react-router';
+import { useLocation, useRouteMatch } from 'react-router';
 import IngredientDetails from '../Ingredient-details/Ingredient-details';
 import Modal from '../modal/modal';
-import OrderDetails from '../order-details/order-details';
 import ProtectedRoute from '../protected-route/protected-route';
 import { ILocationState, IModalSwitchProps } from '../../utils/types';
+import CreatedOrderDetails from '../created-order-details/created-order-details';
+import OrderDetails from '../order-details/order-details';
 
 export const ModalSwitch: FC<IModalSwitchProps> = ({ children }) => {
   const history = useHistory();
@@ -32,6 +32,26 @@ export const ModalSwitch: FC<IModalSwitchProps> = ({ children }) => {
           children={
             <Modal onClose={onClose}>
               <IngredientDetails />
+            </Modal>
+          }
+        />
+      )}
+      {background && (
+        <ProtectedRoute
+          path='/profile/orders/:id'
+          children={
+            <Modal onClose={onClose}>
+              <CreatedOrderDetails />
+            </Modal>
+          }
+        />
+      )}
+      {background && (
+        <Route
+          path='/feed/:id'
+          children={
+            <Modal onClose={onClose}>
+              <CreatedOrderDetails />
             </Modal>
           }
         />

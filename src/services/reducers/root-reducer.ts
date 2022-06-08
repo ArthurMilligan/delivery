@@ -1,3 +1,4 @@
+import { wsReducer } from './ws-reducer';
 import { combineReducers } from 'redux';
 import { authReducer } from './auth-reducer';
 import { cartReducer } from './cart-reducer';
@@ -13,4 +14,5 @@ export const rootReducer = combineReducers({
   items: itemsReducer,
   modalItem: modalItemReducer,
   order: orderReducer,
+  wsFeed: wsReducer
 });

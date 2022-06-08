@@ -1,9 +1,4 @@
-import {
-  BurgerIcon,
-  ListIcon,
-  Logo,
-  ProfileIcon,
-} from '@ya.praktikum/react-developer-burger-ui-components';
+import { BurgerIcon, ListIcon, Logo, ProfileIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { FC } from 'react';
 import { NavLink } from 'react-router-dom';
 import style from './app-header.module.css';
@@ -26,11 +21,13 @@ const AppHeader: FC = () => {
           </div>
           <div className={`${style.menuItem} mr-8 pr-5 pl-5`}>
             <ListIcon type='secondary' />
-            <span
+            <NavLink
+              to={{ pathname: `/feed` }}
               className={`${style.menuItemText} ml-2 text text_type_main-default text_color_inactive`}
+              activeClassName={style.active}
             >
               Лента заказов
-            </span>
+            </NavLink>
           </div>
         </div>
         <NavLink to={{ pathname: `/` }}>

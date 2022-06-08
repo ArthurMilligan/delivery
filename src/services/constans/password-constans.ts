@@ -1,0 +1,14 @@
+import { baseUrl } from '../../utils/url';
+
+export const FORGOT_PASSWORD: 'FORGOT_PASSWORD' = 'FORGOT_PASSWORD';
+export const FORGOT_PASSWORD_SUCCESS: 'FORGOT_PASSWORD_SUCCESS' = 'FORGOT_PASSWORD_SUCCESS';
+export const FORGOT_PASSWORD_FAILED: 'FORGOT_PASSWORD_FAILED' = 'FORGOT_PASSWORD_FAILED';
+export const FORGOT_PASSWORD_END: 'FORGOT_PASSWORD_END' = 'FORGOT_PASSWORD_END';
+
+export const RESET_PASSSWORD: 'RESET_PASSWORD' = 'RESET_PASSWORD';
+export const RESET_PASSSWORD_SUCCESS: 'RESET_PASSWORD_SUCCESS' = 'RESET_PASSWORD_SUCCESS';
+export const RESET_PASSSWORD_FAILED: 'RESET_PASSWORD_FAILED' = 'RESET_PASSWORD_FAILED';
+export const RESET_PASSSWORD_END: 'RESET_PASSSWORD_END' = 'RESET_PASSSWORD_END';
+
+export const forgotPasswordUrl: string = baseUrl + '/password-reset';
+export const resetPasswordUrl: string = baseUrl + '/password-reset/reset';

@@ -1,10 +1,8 @@
 import { FC, useEffect } from 'react';
 import style from './Ingredient-details.module.css';
-import { useDispatch, useSelector } from 'react-redux';
-import {
-  ADD_ITEM_INFORMATION_ACTION_CREATOR,
-  DELETE_ITEM_INFORMATION,
-} from '../../services/actions/modal-item-actions';
+import { useDispatch, useSelector } from '../../services/types/hooks';
+import { ADD_ITEM_INFORMATION_ACTION_CREATOR } from '../../services/actions/modal-item-actions';
+import { DELETE_ITEM_INFORMATION } from '../../services/constans/modal-item-constans';
 import { useParams } from 'react-router-dom';
 import { getItems } from '../../services/actions/items-actions';
 import NotFound404 from '../../pages/not-found-404/not-found-404';
@@ -13,12 +11,8 @@ import { IItem } from '../../utils/types';
 const IngredientDetails: FC = ({ ...props }) => {
   const dispatch = useDispatch();
   const { id } = useParams<{ id?: string }>();
-  const ingredients: Array<IItem> = useSelector(
-    (store: any) => store.items.items
-  );
-  const currentIngredient = ingredients.filter(
-    (ingredient) => ingredient._id === id
-  )[0];
+  const ingredients: Array<IItem> = useSelector((store) => store.items.items);
+  const currentIngredient = ingredients.filter((ingredient) => ingredient._id === id)[0];
   useEffect(() => {
     if (!ingredients.length) {
       dispatch(getItems());
@@ -48,43 +42,25 @@ const IngredientDetails: FC = ({ ...props }) => {
         <span className='text text_type_main-large'>Детали ингридиента</span>
       </div>
       <div className={`${style.content} mb-15`}>
-        <img className={style.img} src={currentIngredient.image_large} />
-        <span className='text text_type_main-medium mt-4'>
-          {currentIngredient.name}
-        </span>
+        <img className={style.img} src={currentIngredient.image_large} alt='картинка' />
+        <span className='text text_type_main-medium mt-4'>{currentIngredient.name}</span>
 
         <ul className={`${style.list} mt-8`}>
           <li className={`${style.listElement} mr-5`}>
-            <span className='text text_type_main-default text_color_inactive'>
-              Калории,ккал
-            </span>
-            <span className='text text_type_digits-default text_color_inactive'>
-              {currentIngredient.calories}
-            </span>
+            <span className='text text_type_main-default text_color_inactive'>Калории,ккал</span>
+            <span className='text text_type_digits-default text_color_inactive'>{currentIngredient.calories}</span>
           </li>
           <li className={`${style.listElement} mr-5`}>
-            <span className='text text_type_main-default text_color_inactive'>
-              Белки, г
-            </span>
-            <span className='text text_type_digits-default text_color_inactive'>
-              {currentIngredient.proteins}
-            </span>
+            <span className='text text_type_main-default text_color_inactive'>Белки, г</span>
+            <span className='text text_type_digits-default text_color_inactive'>{currentIngredient.proteins}</span>
           </li>
           <li className={`${style.listElement} mr-5`}>
-            <span className='text text_type_main-default text_color_inactive'>
-              Жиры, г
-            </span>
-            <span className='text text_type_digits-default text_color_inactive'>
-              {currentIngredient.fat}
-            </span>
+            <span className='text text_type_main-default text_color_inactive'>Жиры, г</span>
+            <span className='text text_type_digits-default text_color_inactive'>{currentIngredient.fat}</span>
           </li>
           <li className={`${style.listElement}`}>
-            <span className='text text_type_main-default text_color_inactive'>
-              Углеводы, г
-            </span>
-            <span className='text text_type_digits-default text_color_inactive'>
-              {currentIngredient.carbohydrates}
-            </span>
+            <span className='text text_type_main-default text_color_inactive'>Углеводы, г</span>
+            <span className='text text_type_digits-default text_color_inactive'>{currentIngredient.carbohydrates}</span>
           </li>
         </ul>
       </div>

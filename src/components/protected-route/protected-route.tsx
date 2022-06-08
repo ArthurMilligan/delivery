@@ -1,18 +1,13 @@
-import {  FC, useEffect, ReactChild } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { FC, useEffect, ReactChild } from 'react';
+import { useDispatch, useSelector } from '../../services/types/hooks';
 import { Redirect, Route, useLocation } from 'react-router-dom';
-import {
-  getUserInformation,
-  updateToken,
-} from '../../services/actions/auth-actions';
-import {RouteProps} from 'react-router'
+import { getUserInformation, updateToken } from '../../services/actions/auth-actions';
+import { RouteProps } from 'react-router';
 
-const ProtectedRoute: FC<RouteProps&{children:ReactChild}> = ({ children, ...rest }) => {
-  const isAuth: boolean = useSelector((store: any) => store.auth.isAuth);
+const ProtectedRoute: FC<RouteProps & { children: ReactChild }> = ({ children, ...rest }) => {
+  const isAuth: boolean = useSelector((store) => store.auth.isAuth);
   const location = useLocation();
-  const getUserStatusFailed: boolean = useSelector(
-    (store: any) => store.auth.getUserInfo.getUserRequestFailed
-  );
+  const getUserStatusFailed: boolean = useSelector((store) => store.auth.getUserInfo.getUserRequestFailed);
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getUserInformation());

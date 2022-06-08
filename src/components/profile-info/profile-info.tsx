@@ -1,29 +1,15 @@
-import {
-  Button,
-  Input,
-} from '@ya.praktikum/react-developer-burger-ui-components';
+import { Button, Input } from '@ya.praktikum/react-developer-burger-ui-components';
 import { ChangeEvent, FC, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import {
-  updateToken,
-  updateUserInformation,
-} from '../../services/actions/auth-actions';
+import { useDispatch, useSelector } from '../../services/types/hooks';
+import { updateToken, updateUserInformation } from '../../services/actions/auth-actions';
 import { IUserInformation } from '../../utils/types';
 import Loading from '../loading/loading';
 
 const ProfileInfo: FC = () => {
-  const startData: IUserInformation = useSelector(
-    (store: any) => store.auth.userInformation
-  );
-  const updateStatusFailed: boolean = useSelector(
-    (store: any) => store.auth.updateUserInfo.updateUserRequestFailed
-  );
-  const isGetRequest: boolean = useSelector(
-    (store: any) => store.auth.getUserInfo.getUserRequest
-  );
-  const isUpdateRequest: boolean = useSelector(
-    (store: any) => store.auth.updateUserInfo.updateUser
-  );
+  const startData: IUserInformation = useSelector((store) => store.auth.userInformation);
+  const updateStatusFailed: boolean = useSelector((store) => store.auth.updateUserInfo.updateUserRequestFailed);
+  const isGetRequest: boolean = useSelector((store) => store.auth.getUserInfo.getUserRequest);
+  const isUpdateRequest: boolean = useSelector((store) => store.auth.updateUserInfo.updateUserRequest);
   const dispatch = useDispatch();
   const [userData, setUserData] = useState<IUserInformation>(startData);
   const [password, setPassword] = useState<string>('');
@@ -35,7 +21,7 @@ const ProfileInfo: FC = () => {
   }
 
   const cancelOnClick = () => {
-    setUserData({ ...userData, ...startData});
+    setUserData({ ...userData, ...startData });
     setPassword('');
     setIsChanged(false);
   };
@@ -54,7 +40,7 @@ const ProfileInfo: FC = () => {
         <Input
           type={'text'}
           placeholder={'Имя'}
-          onChange={(e:ChangeEvent<HTMLInputElement>) => {
+          onChange={(e: ChangeEvent<HTMLInputElement>) => {
             setUserData({ ...userData, name: e.target.value });
             setIsChanged(true);
           }}
@@ -70,7 +56,7 @@ const ProfileInfo: FC = () => {
         <Input
           type={'email'}
           placeholder={'Логин'}
-          onChange={(e:ChangeEvent<HTMLInputElement>) => {
+          onChange={(e: ChangeEvent<HTMLInputElement>) => {
             setUserData({ ...userData, email: e.target.value });
             setIsChanged(true);
           }}
@@ -86,7 +72,7 @@ const ProfileInfo: FC = () => {
         <Input
           type={'password'}
           placeholder={'Пароль'}
-          onChange={(e:ChangeEvent<HTMLInputElement>) => {
+          onChange={(e: ChangeEvent<HTMLInputElement>) => {
             setPassword(e.target.value);
             setIsChanged(true);
           }}

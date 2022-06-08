@@ -1,10 +1,6 @@
-import {
-  Input,
-  Button,
-  PasswordInput,
-} from '@ya.praktikum/react-developer-burger-ui-components';
+import { Input, Button, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useCallback, useState, FormEvent, ChangeEvent } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from '../../services/types/hooks';
 import { useHistory } from 'react-router-dom';
 import Loading from '../../components/loading/loading';
 import { registration } from '../../services/actions/auth-actions';
@@ -14,9 +10,7 @@ import Styles from './registration.module.css';
 const Registration = () => {
   const dispatch = useDispatch();
   const history = useHistory();
-  const isRequest: boolean = useSelector(
-    (store: any) => store.auth.registrationInfo.registrationRequest
-  );
+  const isRequest: boolean = useSelector((store) => store.auth.registrationInfo.registrationRequest);
   const loginOnClick = useCallback(() => {
     history.replace({ pathname: '/login' });
   }, [history]);
@@ -35,15 +29,10 @@ const Registration = () => {
   return (
     <div className={Styles.registrationBlock}>
       <h1 className='text text_type_main-medium'>Регистрация</h1>
-      <form
-        className={Styles.registrationForm}
-        onSubmit={registrationOnSubmit}
-      >
+      <form className={Styles.registrationForm} onSubmit={registrationOnSubmit}>
         <div className='mt-6'>
           <Input
-            onChange={(e:ChangeEvent<HTMLInputElement>) =>
-              setRegistrationData({ ...registrationData, name: e.target.value })
-            }
+            onChange={(e: ChangeEvent<HTMLInputElement>) => setRegistrationData({ ...registrationData, name: e.target.value })}
             value={registrationData.name}
             type={'text'}
             placeholder={'Имя'}
@@ -55,7 +44,7 @@ const Registration = () => {
         </div>
         <div className='mt-6'>
           <Input
-            onChange={(e:ChangeEvent<HTMLInputElement>) =>
+            onChange={(e: ChangeEvent<HTMLInputElement>) =>
               setRegistrationData({
                 ...registrationData,
                 email: e.target.value,
@@ -74,7 +63,7 @@ const Registration = () => {
           <PasswordInput
             value={registrationData.password}
             name={'password'}
-            onChange={(e:ChangeEvent<HTMLInputElement>) =>
+            onChange={(e: ChangeEvent<HTMLInputElement>) =>
               setRegistrationData({
                 ...registrationData,
                 password: e.target.value,
@@ -89,9 +78,7 @@ const Registration = () => {
         </div>
       </form>
       <div className='mt-20'>
-        <span className='text text_type_main-default text_color_inactive'>
-          Уже зарегистрированы?
-        </span>
+        <span className='text text_type_main-default text_color_inactive'>Уже зарегистрированы?</span>
         <Button type='secondary' size='medium' onClick={loginOnClick}>
           Войти
         </Button>

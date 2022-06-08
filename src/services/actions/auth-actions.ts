@@ -1,29 +1,104 @@
+import { AppThunk, AppDispatch } from './../types/index';
 import { checkResponse } from '../../utils/check-response';
 import { baseUrl } from '../../utils/url';
 import { deleteCookie, getCookie, setCookie } from '../../utils/cookie';
-export const REGISTRATION = 'REGISTRATION';
-export const REGISTRATION_SUCCESS = 'REGISTRATION_SUCCESS';
-export const REGISTRATION_FAILED = 'REGISTRATION_FAILED';
+import {
+  REGISTRATION,
+  REGISTRATION_SUCCESS,
+  REGISTRATION_FAILED,
+  LOGIN,
+  LOGIN_SUCCESS,
+  LOGIN_FAILED,
+  LOGIN_END,
+  GET_USER_INFORMATION,
+  GET_USER_INFORMATION_SUCCESS,
+  GET_USER_INFORMATION_FAILED,
+  UPDATE_TOKEN,
+  UPDATE_TOKEN_SUCCESS,
+  UPDATE_TOKEN_FAILED,
+  UPDATE_USER_INFORMATION,
+  UPDATE_USER_INFORMATION_SUCCESS,
+  UPDATE_USER_INFORMATION_FAILED,
+  LOGOUT,
+} from '../constans/auth-constans';
 
-export const LOGIN = 'LOGIN';
-export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
-export const LOGIN_FAILED = 'LOGIN_FAILED';
-export const LOGIN_END = 'LOGIN_END';
-
-export const GET_USER_INFORMATION = 'GET_USER_INFORMATION';
-export const GET_USER_INFORMATION_SUCCESS = 'GET_USER_INFORMATION_SUCCESS';
-export const GET_USER_INFORMATION_FAILED = 'GET_USER_INFORMATION_FAILED';
-
-export const UPDATE_TOKEN = 'UPDATE_TOKEN';
-export const UPDATE_TOKEN_SUCCESS = 'UPDATE_TOKEN_SUCCESS';
-export const UPDATE_TOKEN_FAILED = 'UPDATE_TOKEN_FAILED';
-
-export const UPDATE_USER_INFORMATION = 'UPDATE_USER_INFORMATION';
-export const UPDATE_USER_INFORMATION_SUCCESS =
-  'UPDATE_USER_INFORMATION_SUCCESS';
-export const UPDATE_USER_INFORMATION_FAILED = 'UPDATE_USER_INFORMATION_FAILED';
-
-export const LOGOUT = 'LOGOUT';
+export interface IRegistragionAction {
+  readonly type: typeof REGISTRATION;
+}
+export interface IRegistrationSuccessAction {
+  readonly type: typeof REGISTRATION_SUCCESS;
+  readonly email: string;
+  readonly name: string;
+}
+export interface IRegistrationFailedAction {
+  readonly type: typeof REGISTRATION_FAILED;
+}
+export interface ILoginAction {
+  readonly type: typeof LOGIN;
+}
+export interface ILoginSuccessAction {
+  readonly type: typeof LOGIN_SUCCESS;
+  readonly email: string;
+  readonly name: string;
+}
+export interface ILoginFailedAction {
+  readonly type: typeof LOGIN_FAILED;
+}
+export interface ILoginEndAction {
+  readonly type: typeof LOGIN_END;
+}
+export interface IGetUserInformationAction {
+  readonly type: typeof GET_USER_INFORMATION;
+}
+export interface IGetUserInformationSuccessAction {
+  readonly type: typeof GET_USER_INFORMATION_SUCCESS;
+  readonly email: string;
+  readonly name: string;
+}
+export interface IGetUserInformationFailedAction {
+  readonly type: typeof GET_USER_INFORMATION_FAILED;
+}
+export interface IUpdateTokenAction {
+  readonly type: typeof UPDATE_TOKEN;
+}
+export interface IUpdateTokenSuccessAction {
+  readonly type: typeof UPDATE_TOKEN_SUCCESS;
+}
+export interface IUpdateTokenFailedAction {
+  readonly type: typeof UPDATE_TOKEN_FAILED;
+}
+export interface IUpdateUserInformationAction {
+  readonly type: typeof UPDATE_USER_INFORMATION;
+}
+export interface IUpdateUserInformationSuccessAction {
+  readonly type: typeof UPDATE_USER_INFORMATION_SUCCESS;
+  readonly email: string;
+  readonly name: string;
+}
+export interface IUpdateUserInformationFailedAction {
+  readonly type: typeof UPDATE_USER_INFORMATION_FAILED;
+}
+export interface ILogoutAction {
+  readonly type: typeof LOGOUT;
+}
+export type TAuthActions =
+  | IRegistragionAction
+  | IRegistrationSuccessAction
+  | IRegistrationFailedAction
+  | ILoginAction
+  | ILoginSuccessAction
+  | ILoginFailedAction
+  | ILoginEndAction
+  | IGetUserInformationAction
+  | IGetUserInformationSuccessAction
+  | IGetUserInformationFailedAction
+  | IUpdateTokenAction
+  | IUpdateTokenSuccessAction
+  | IUpdateTokenFailedAction
+  | IUpdateUserInformationAction
+  | IUpdateUserInformationSuccessAction
+  | IUpdateUserInformationFailedAction
+  | ILogoutAction;
 
 const registrationUrl = baseUrl + '/auth/register';
 const loginUrl = baseUrl + '/auth/login';
@@ -31,9 +106,9 @@ const userInformationUrl = baseUrl + '/auth/user';
 const updateTokenUrl = baseUrl + '/auth/token';
 const logoutUrl = baseUrl + '/auth/logout';
 
-export const registration =
-  ({ email, password, name }) =>
-  (dispatch) => {
+export const registration: AppThunk =
+  ({ email, password, name }: { email: string; password: string; name: string }) =>
+  (dispatch: AppDispatch) => {
     const requestBody = {
       email: email,
       password: password,
@@ -64,8 +139,8 @@ export const registration =
       })
       .then((res) => {
         if (res.refreshToken && res.accessToken) {
-          document.cookie = setCookie(`refreshToken`, res.refreshToken);
-          document.cookie = setCookie(`accessToken`, res.accessToken);
+          setCookie(`refreshToken`, res.refreshToken);
+          setCookie(`accessToken`, res.accessToken);
         }
       })
       .catch((err) => {
@@ -76,9 +151,9 @@ export const registration =
       });
   };
 
-export const login =
-  ({ email, password }) =>
-  (dispatch) => {
+export const login: AppThunk =
+  ({ email, password }: { email: string; password: string }) =>
+  (dispatch: AppDispatch) => {
     const requestBody = {
       email: email,
       password: password,
@@ -111,8 +186,8 @@ export const login =
       })
       .then((res) => {
         if (res.refreshToken && res.accessToken) {
-          document.cookie = setCookie(`refreshToken`, res.refreshToken);
-          document.cookie = setCookie(`accessToken`, res.accessToken);
+          setCookie(`refreshToken`, res.refreshToken);
+          setCookie(`accessToken`, res.accessToken);
         }
       })
       .catch((err) => {
@@ -123,7 +198,7 @@ export const login =
       });
   };
 
-export const getUserInformation = () => (dispatch) => {
+export const getUserInformation: AppThunk = () => (dispatch: AppDispatch) => {
   const token = getCookie('accessToken');
   if (!token) {
     dispatch({
@@ -162,9 +237,9 @@ export const getUserInformation = () => (dispatch) => {
   }
 };
 
-export const updateUserInformation =
-  ({ email, name, password }) =>
-  (dispatch) => {
+export const updateUserInformation: AppThunk =
+  ({ email, name, password }: { email: string; password: string; name: string }) =>
+  (dispatch: AppDispatch) => {
     const token = getCookie('accessToken');
     if (!token) {
       dispatch({
@@ -204,7 +279,7 @@ export const updateUserInformation =
     }
   };
 
-export const updateToken = () => (dispatch) => {
+export const updateToken: AppThunk = () => (dispatch: AppDispatch) => {
   const token = getCookie('refreshToken');
   dispatch({ type: UPDATE_TOKEN });
   fetch(updateTokenUrl, {
@@ -229,8 +304,8 @@ export const updateToken = () => (dispatch) => {
     })
     .then((res) => {
       if (res.refreshToken && res.accessToken) {
-        document.cookie = setCookie(`refreshToken`, res.refreshToken);
-        document.cookie = setCookie(`accessToken`, res.accessToken);
+        setCookie(`refreshToken`, res.refreshToken);
+        setCookie(`accessToken`, res.accessToken);
       }
     })
     .catch((err) => {
@@ -241,7 +316,7 @@ export const updateToken = () => (dispatch) => {
     });
 };
 
-export const logout = () => (dispatch) => {
+export const logout: AppThunk = () => (dispatch: AppDispatch) => {
   const token = getCookie('refreshToken');
   deleteCookie('accessToken');
   fetch(logoutUrl, {

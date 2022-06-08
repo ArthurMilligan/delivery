@@ -1,0 +1,52 @@
+.order {
+  margin: 60px 60px 60px 60px;
+}
+.orderNumber {
+  text-align: center;
+}
+.imgBlock {
+  width: 64px;
+  height: 64px;
+  overflow: hidden;
+  border-radius: 50%;
+  border: 2px solid #801ab2;
+  background: #131316;
+  position: relative;
+}
+.img {
+  position: absolute;
+  right: -41px;
+}
+.element {
+  display: flex;
+  align-items: center;
+}
+.elementsBlock {
+  overflow-y: scroll;
+  overflow-x: hidden;
+  height: 20vh;
+}
+.elementsBlock::-webkit-scrollbar {
+  width: 8px;
+}
+
+.elementsBlock::-webkit-scrollbar-track {
+  background: #2f2f37;
+}
+
+.elementsBlock::-webkit-scrollbar-thumb {
+  background-color: #8585ad;
+}
+.elementName {
+  display: flex;
+  align-items: center;
+  width: 80%;
+  justify-content: space-between;
+}
+.total {
+  display: flex;
+  justify-content: space-between;
+}
+.done{
+    color:#00CCCC
+}

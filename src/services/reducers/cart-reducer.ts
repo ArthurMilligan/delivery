@@ -1,22 +1,28 @@
-import {
-  ADD_PRODUCT,
-  DELETE_PRODUCT,
-  MOVE_PRODUCT,
-  GET_TOTAL_PRICE,
-  CLEAR_CART,
-} from '../actions/cart-actions';
+import { IIngredient } from './../types/cart-reducers-types';
+import { ICartState } from './../types/cart-reducers-types';
+import { TCartActions } from './../actions/cart-actions';
+import { ADD_PRODUCT, DELETE_PRODUCT, MOVE_PRODUCT, GET_TOTAL_PRICE, CLEAR_CART } from '../constans/cart-constans';
 
-const initialState = {
-  bun: {},
+const initialState: ICartState = {
+  bun: {
+    ingredient_id: '',
+    name: '',
+    price: 0,
+    thumbnail: '',
+  },
   ingredients: [],
   totalPrice: 0,
 };
-
-export const cartReducer = (state = initialState, action) => {
+export const cartReducer = (state = initialState, action: TCartActions): ICartState => {
   switch (action.type) {
     case CLEAR_CART: {
       return {
-        bun: {},
+        bun: {
+          ingredient_id: '',
+          name: '',
+          price: 0,
+          thumbnail: '',
+        },
         ingredients: [],
         totalPrice: 0,
       };
@@ -61,14 +67,12 @@ export const cartReducer = (state = initialState, action) => {
     case DELETE_PRODUCT: {
       return {
         ...state,
-        ingredients: [...state.ingredients.filter((i) => i.id !== action.id)],
+        ingredients: [...state.ingredients.filter((i: IIngredient) => i.id !== action.id)],
       };
     }
     case GET_TOTAL_PRICE: {
-      const ingredientsPrice = state.ingredients.length
-          ? state.ingredients.reduce((acc, b) => acc + b.price, 0)
-          : 0,
-        bunsPrice = state.bun.price ? state.bun.price * 2 : 0;
+      const ingredientsPrice = state.ingredients.length ? state.ingredients.reduce((acc: number, b: IIngredient) => acc + b.price, 0) : 0,
+        bunsPrice = state.bun?.price ? state.bun?.price * 2 : 0;
       return {
         ...state,
         totalPrice: bunsPrice + ingredientsPrice,

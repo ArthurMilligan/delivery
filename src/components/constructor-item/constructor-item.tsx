@@ -1,21 +1,15 @@
-import {
-  ConstructorElement,
-  DragIcon,
-} from '@ya.praktikum/react-developer-burger-ui-components';
+import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import React, { FC, useRef } from 'react';
 import style from './constructor-item.module.css';
-import { useDispatch } from 'react-redux';
+import { useDispatch } from '../../services/types/hooks';
 import { useDrag, useDrop } from 'react-dnd';
-import {
-  DELETE_PRODUCT_ACTION_CREATOR,
-  MOVE_PRODUCT_ACTION_CREATOR,
-} from '../../services/actions/cart-actions';
+import { DELETE_PRODUCT_ACTION_CREATOR, MOVE_PRODUCT_ACTION_CREATOR } from '../../services/actions/cart-actions';
 import { IConstructorItemProps } from '../../utils/types';
 
 const ConstructorItem: FC<IConstructorItemProps> = (props) => {
   const ref = useRef<HTMLInputElement>(null);
   const dispatch = useDispatch();
-  const handleClose = () => dispatch(DELETE_PRODUCT_ACTION_CREATOR(props.id));
+  const handleClose = () => (props.id ? dispatch(DELETE_PRODUCT_ACTION_CREATOR(props.id)) : null);
   const [, drop] = useDrop({
     accept: 'constructor',
     hover: (item: { index: number }, monitor) => {
@@ -28,11 +22,9 @@ const ConstructorItem: FC<IConstructorItemProps> = (props) => {
         return;
       }
       const hoverBoundingRect = ref.current?.getBoundingClientRect();
-      const hoverMiddleY =
-        (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2;
+      const hoverMiddleY = (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2;
       const clientOffset = monitor.getClientOffset();
-      const hoverClientY =
-        clientOffset !== null ? clientOffset.y - hoverBoundingRect.top : 0;
+      const hoverClientY = clientOffset !== null ? clientOffset.y - hoverBoundingRect.top : 0;
       if (dragIndex < hoverIndex && hoverClientY < hoverMiddleY) {
         return;
       }
@@ -65,11 +57,7 @@ const ConstructorItem: FC<IConstructorItemProps> = (props) => {
   const opacity = isDragging ? 0 : 1;
   drag(drop(ref));
   return (
-    <div
-      ref={props.draggable ? ref : null}
-      style={{ opacity }}
-      className={`${props.type ? 'pl-8' : 'pl-2'} ${style.item} mb-4`}
-    >
+    <div ref={props.draggable ? ref : null} style={{ opacity }} className={`${props.type ? 'pl-8' : 'pl-2'} ${style.item} mb-4`}>
       {!props.type && <DragIcon type='primary' />}
       <ConstructorElement
         isLocked={props.isLocked}
