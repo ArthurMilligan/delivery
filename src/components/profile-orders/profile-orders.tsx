@@ -4,9 +4,10 @@ import { updateToken } from '../../services/actions/auth-actions';
 import { WS_CONNECTION_CLOSE, WS_CONNECTION_START } from '../../services/constans/ws-constans';
 import { useDispatch, useSelector } from '../../services/types/hooks';
 import { getCookie } from '../../utils/cookie';
+import { wsUrl } from '../../utils/url';
 import Loading from '../loading/loading';
 import Order from '../order/order';
-import Styles from './profile-orders.module.css'
+import Styles from './profile-orders.module.css';
 
 const ProfileOrders: FC = () => {
   const dispatch = useDispatch();
@@ -14,17 +15,18 @@ const ProfileOrders: FC = () => {
   const redirectToProfileOrders = 'profile/orders';
   useEffect(() => {
     dispatch(updateToken);
-    dispatch({ type: WS_CONNECTION_START, payload: accessToken });
-    return ()=>{dispatch({ type: WS_CONNECTION_CLOSE})}
+    dispatch({ type: WS_CONNECTION_START, payload: wsUrl + '?token=' + accessToken });
+    return () => {
+      dispatch({ type: WS_CONNECTION_CLOSE });
+    };
   }, [accessToken]);
   const { orders, wsConnected } = useSelector((store) => store.wsFeed);
-  return (
-    wsConnected?
-    (<div className={Styles.ordersTape}>
+  return wsConnected ? (
+    <div className={Styles.ordersTape}>
       {orders.map((item) => {
         return (
           <Order
-            key={uuidv4()}
+            key={item._id}
             orderDate={item.updatedAt}
             orderNumber={item.number}
             burgerIngredientsId={item.ingredients}
@@ -35,8 +37,9 @@ const ProfileOrders: FC = () => {
           />
         );
       })}
-    </div>)
-    :(<Loading/>)
+    </div>
+  ) : (
+    <Loading />
   );
 };
 export default ProfileOrders;

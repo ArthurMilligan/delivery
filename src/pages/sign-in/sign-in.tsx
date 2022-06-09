@@ -10,7 +10,7 @@ import Styles from './sign-in.module.css';
 const SignIn: FC = () => {
   const history = useHistory();
   const dispatch = useDispatch();
-  const isRequest: boolean = useSelector((store) => store.auth.loginInfo.loginRequest);
+  const isRequest = useSelector((store) => store.auth.loginInfo.loginRequest);
   const [loginData, setLoginData] = useState<ISignInState>({
     email: '',
     password: '',

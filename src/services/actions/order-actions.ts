@@ -1,4 +1,4 @@
-import { AppThunk, AppDispatch } from './../types/index';
+import { AppThunk } from './../types/index';
 import { baseUrl } from '../../utils/url';
 import { checkResponse } from '../../utils/check-response';
 import { CLEAR_CART } from '../constans/cart-constans';
@@ -26,7 +26,7 @@ export const GET_ORDER_SUCCESS_ACTION_CREATOR = (number: number, name: string) =
   };
 };
 
-export const getOrder: AppThunk = (constructorDataToRequest: Array<string>) => (dispatch: AppDispatch) => {
+export const getOrder: AppThunk = (constructorDataToRequest: Array<string>) => (dispatch) => {
   const requestBody = { ingredients: constructorDataToRequest };
   const token = getCookie('accessToken') || '';
   dispatch({

@@ -14,18 +14,12 @@ export const ModalSwitch: FC<IModalSwitchProps> = ({ children }) => {
     history.goBack();
   };
   const location = useLocation<ILocationState>();
-  const match = useRouteMatch('/profile/:orderNumber');
+  const orderMatch = useRouteMatch('/profile/:orderNumber');
+  const orderDetailsMatch = useRouteMatch('/profile/orders/:id');
   const background = location && location.state && location.state.background;
   return (
     <>
       <Switch location={background || location}>{children}</Switch>
-      {background && match && (
-        <ProtectedRoute path='/profile/:orderNumber'>
-          <Modal onClose={onClose}>
-            <OrderDetails />
-          </Modal>
-        </ProtectedRoute>
-      )}
       {background && (
         <Route
           path='/ingredients/:id'
@@ -36,7 +30,18 @@ export const ModalSwitch: FC<IModalSwitchProps> = ({ children }) => {
           }
         />
       )}
+
       {background && (
+        <Route
+          path='/feed/:id'
+          children={
+            <Modal onClose={onClose}>
+              <CreatedOrderDetails isFeed={true} />
+            </Modal>
+          }
+        />
+      )}
+      {background && orderDetailsMatch && (
         <ProtectedRoute
           path='/profile/orders/:id'
           children={
@@ -46,15 +51,12 @@ export const ModalSwitch: FC<IModalSwitchProps> = ({ children }) => {
           }
         />
       )}
-      {background && (
-        <Route
-          path='/feed/:id'
-          children={
-            <Modal onClose={onClose}>
-              <CreatedOrderDetails />
-            </Modal>
-          }
-        />
+      {background && orderMatch && (
+        <ProtectedRoute exact={true} path='/profile/:orderNumber'>
+          <Modal onClose={onClose}>
+            <OrderDetails />
+          </Modal>
+        </ProtectedRoute>
       )}
     </>
   );

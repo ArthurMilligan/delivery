@@ -1,4 +1,4 @@
-import { AppThunk, AppDispatch } from './../types/index';
+import { AppThunk } from './../types/index';
 import { checkResponse } from '../../utils/check-response';
 import { baseUrl } from '../../utils/url';
 import { deleteCookie, getCookie, setCookie } from '../../utils/cookie';
@@ -108,7 +108,7 @@ const logoutUrl = baseUrl + '/auth/logout';
 
 export const registration: AppThunk =
   ({ email, password, name }: { email: string; password: string; name: string }) =>
-  (dispatch: AppDispatch) => {
+  (dispatch) => {
     const requestBody = {
       email: email,
       password: password,
@@ -153,7 +153,7 @@ export const registration: AppThunk =
 
 export const login: AppThunk =
   ({ email, password }: { email: string; password: string }) =>
-  (dispatch: AppDispatch) => {
+  (dispatch) => {
     const requestBody = {
       email: email,
       password: password,
@@ -198,7 +198,7 @@ export const login: AppThunk =
       });
   };
 
-export const getUserInformation: AppThunk = () => (dispatch: AppDispatch) => {
+export const getUserInformation: AppThunk = () => (dispatch) => {
   const token = getCookie('accessToken');
   if (!token) {
     dispatch({
@@ -239,7 +239,7 @@ export const getUserInformation: AppThunk = () => (dispatch: AppDispatch) => {
 
 export const updateUserInformation: AppThunk =
   ({ email, name, password }: { email: string; password: string; name: string }) =>
-  (dispatch: AppDispatch) => {
+  (dispatch) => {
     const token = getCookie('accessToken');
     if (!token) {
       dispatch({
@@ -279,7 +279,7 @@ export const updateUserInformation: AppThunk =
     }
   };
 
-export const updateToken: AppThunk = () => (dispatch: AppDispatch) => {
+export const updateToken: AppThunk = () => (dispatch) => {
   const token = getCookie('refreshToken');
   dispatch({ type: UPDATE_TOKEN });
   fetch(updateTokenUrl, {
@@ -316,7 +316,7 @@ export const updateToken: AppThunk = () => (dispatch: AppDispatch) => {
     });
 };
 
-export const logout: AppThunk = () => (dispatch: AppDispatch) => {
+export const logout: AppThunk = () => (dispatch) => {
   const token = getCookie('refreshToken');
   deleteCookie('accessToken');
   fetch(logoutUrl, {

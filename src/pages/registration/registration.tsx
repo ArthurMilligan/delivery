@@ -10,7 +10,7 @@ import Styles from './registration.module.css';
 const Registration = () => {
   const dispatch = useDispatch();
   const history = useHistory();
-  const isRequest: boolean = useSelector((store) => store.auth.registrationInfo.registrationRequest);
+  const isRequest = useSelector((store) => store.auth.registrationInfo.registrationRequest);
   const loginOnClick = useCallback(() => {
     history.replace({ pathname: '/login' });
   }, [history]);

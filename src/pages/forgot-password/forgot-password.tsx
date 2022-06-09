@@ -10,8 +10,8 @@ const ForgotPassword: FC = () => {
   const [email, setEmail] = useState<string>('');
   const dispatch = useDispatch();
   const location = useLocation();
-  const resetEmailSent: boolean = useSelector((store) => store.password.isResetEmailSent);
-  const isRequest: boolean = useSelector((store) => store.password.forgotPasswordRequest);
+  const resetEmailSent = useSelector((store) => store.password.isResetEmailSent);
+  const isRequest = useSelector((store) => store.password.forgotPasswordRequest);
   const history = useHistory();
   const loginOnClick = useCallback(() => {
     history.replace({ pathname: '/login' });

@@ -6,10 +6,10 @@ import { IUserInformation } from '../../utils/types';
 import Loading from '../loading/loading';
 
 const ProfileInfo: FC = () => {
-  const startData: IUserInformation = useSelector((store) => store.auth.userInformation);
-  const updateStatusFailed: boolean = useSelector((store) => store.auth.updateUserInfo.updateUserRequestFailed);
-  const isGetRequest: boolean = useSelector((store) => store.auth.getUserInfo.getUserRequest);
-  const isUpdateRequest: boolean = useSelector((store) => store.auth.updateUserInfo.updateUserRequest);
+  const startData = useSelector((store) => store.auth.userInformation);
+  const updateStatusFailed = useSelector((store) => store.auth.updateUserInfo.updateUserRequestFailed);
+  const isGetRequest = useSelector((store) => store.auth.getUserInfo.getUserRequest);
+  const isUpdateRequest = useSelector((store) => store.auth.updateUserInfo.updateUserRequest);
   const dispatch = useDispatch();
   const [userData, setUserData] = useState<IUserInformation>(startData);
   const [password, setPassword] = useState<string>('');

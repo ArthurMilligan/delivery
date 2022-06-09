@@ -3,7 +3,7 @@ export interface ICartState {
   ingredients: Array<IIngredient>;
   totalPrice: number;
 }
-export interface IBun {
+interface IBun {
   ingredient_id: string;
   name: string;
   price: number;

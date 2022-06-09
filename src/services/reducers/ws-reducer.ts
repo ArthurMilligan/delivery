@@ -2,8 +2,6 @@ import { WS_CONNECTION_SUCCESS, WS_CONNECTION_ERROR, WS_CONNECTION_CLOSED, WS_GE
 import type { TWsActions } from '../actions/ws-actions';
 import { TWsState } from '../types/ws-reducers-types';
 
-
-
 const initialState: TWsState = {
   wsConnected: false,
   orders: [],
@@ -43,12 +41,12 @@ export const wsReducer = (state = initialState, action: TWsActions): TWsState =>
         totalToday: action.payload.totalToday,
       };
     case WS_CLEAR_STATE:
-      return{
+      return {
         wsConnected: false,
         orders: [],
         total: 0,
         totalToday: 0,
-      }
+      };
     default:
       return state;
   }

@@ -9,15 +9,13 @@ import Styles from './order.module.css';
 import { v4 as uuidv4 } from 'uuid';
 import { IOrderProps } from '../../utils/types';
 
-
-
 const Order: FC<IOrderProps> = ({ orderNumber, orderDate, burgerName, burgerIngredientsId, id, redirect, status }) => {
   const location = useLocation();
   const dispatch = useDispatch();
   const allIngredients = useSelector((store) => store.items.items);
-  let orderCost = 0, 
-    rusStatus:string|null = null,
-    statusColor:'green'|'grey' = 'grey'
+  let orderCost = 0,
+    rusStatus: string | null = null,
+    statusColor: 'green' | 'grey' = 'grey';
   const burgerIngredients = burgerIngredientsId.map((id) => {
     const currentIngredient = allIngredients.find((ingredient) => ingredient?._id === id) || null;
     orderCost += currentIngredient?.price || 0;
@@ -29,20 +27,20 @@ const Order: FC<IOrderProps> = ({ orderNumber, orderDate, burgerName, burgerIngr
       dispatch(getItems());
     }
   }, []);
-  if(status){
-    switch(status){
+  if (status) {
+    switch (status) {
       case 'done':
-        rusStatus = 'Выполнен'
-        statusColor='green'
-        break
+        rusStatus = 'Выполнен';
+        statusColor = 'green';
+        break;
       case 'pending':
-        rusStatus = 'Готовится'
-        break
+        rusStatus = 'Готовится';
+        break;
       case 'created':
-        rusStatus = 'Создан'
-        break
+        rusStatus = 'Создан';
+        break;
       default:
-        rusStatus = 'Создан'
+        rusStatus = 'Создан';
     }
   }
   return allIngredients.length ? (
@@ -59,7 +57,7 @@ const Order: FC<IOrderProps> = ({ orderNumber, orderDate, burgerName, burgerIngr
           <span className='text text_type_main-default text_color_inactive'>{new Date(orderDate).toLocaleDateString('ru-RU', dateOptions)}</span>
         </div>
         <div className='text text_type_main-small mt-6'>{burgerName}</div>
-        {status?(<p className={`${Styles[statusColor]} mt-2 text text_type_main-small`}>{rusStatus}</p>):(<span></span>)}
+        {status ? <p className={`${Styles[statusColor]} mt-2 text text_type_main-small`}>{rusStatus}</p> : <span></span>}
         <div className={`${Styles.orderContainInfo} mt-6`}>
           <div className={Styles.ingredientsContainer}>
             {burgerIngredients.map((ingredient, index) => {
@@ -72,7 +70,7 @@ const Order: FC<IOrderProps> = ({ orderNumber, orderDate, burgerName, burgerIngr
                   </div>
                 );
               return (
-                <div className={Styles.ingredient}>
+                <div key={uuidv4()} className={Styles.ingredient}>
                   <img className={Styles.img} src={ingredient.img || undefinedImg} alt='картинка' />
                 </div>
               );

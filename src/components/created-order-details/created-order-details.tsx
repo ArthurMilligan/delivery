@@ -8,23 +8,43 @@ import { useDispatch, useSelector } from '../../services/types/hooks';
 import { dateOptions, undefinedImg } from '../../utils/constans';
 import Styles from './created-order-details.module.css';
 import { ImapIngredient } from '../../utils/types';
-
-
-
-const CreatedOrderDetails: FC = ({}) => {
+import NotFound404 from '../../pages/not-found-404/not-found-404';
+import { wsUrl } from '../../utils/url';
+import { getCookie } from '../../utils/cookie';
+import { getUserInformation, updateToken } from '../../services/actions/auth-actions';
+export interface ICreatedOrderDetailsProps {
+  isFeed?: boolean;
+}
+const CreatedOrderDetails: FC<ICreatedOrderDetailsProps> = ({ isFeed }) => {
   const { id } = useParams<{ id?: string }>();
   const dispatch = useDispatch();
-  const { orders, wsConnected } = useSelector((store) => (store.wsFeed));
+  const { orders, wsConnected } = useSelector((store) => store.wsFeed);
   const allIngredients = useSelector((store) => store.items.items);
   const currentOrder = orders.find((item) => item._id === id);
+  const accessToken = '?token=' + getCookie('accessToken')?.slice(7) || 'all';
+  const getUserStatusFailed = useSelector((store) => store.auth.getUserInfo.getUserRequestFailed);
+
   useEffect(() => {
+    dispatch(getUserInformation());
+    if (getUserStatusFailed) {
+      dispatch(updateToken());
+      dispatch(getUserInformation());
+    }
     if (!allIngredients.length) {
       dispatch(getItems());
     }
     if (!wsConnected) {
-      dispatch({ type: WS_CONNECTION_START });
+      if (isFeed) {
+        dispatch({ type: WS_CONNECTION_START, payload: wsUrl + 'all' });
+      }
+      if (!isFeed && accessToken) {
+        dispatch({ type: WS_CONNECTION_START, payload: wsUrl + accessToken });
+      }
     }
   }, []);
+  if (!currentOrder) {
+    return <NotFound404 />;
+  }
   const mapIngredients: Array<ImapIngredient> = [];
   currentOrder?.ingredients.forEach((item) => {
     if (!mapIngredients.find((i) => i.id === item)) {

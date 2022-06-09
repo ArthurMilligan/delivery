@@ -4,25 +4,26 @@ import { useDispatch, useSelector } from '../../services/types/hooks';
 import Styles from './feed.module.css';
 import { WS_CONNECTION_CLOSE, WS_CONNECTION_START } from '../../services/constans/ws-constans';
 import Loading from '../../components/loading/loading';
-import { v4 as uuidv4 } from 'uuid';
+import { wsUrl } from '../../utils/url';
 
 const Feed: FC = () => {
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch({ type: WS_CONNECTION_START });
-    return ()=>{dispatch({ type: WS_CONNECTION_CLOSE})}
+    dispatch({ type: WS_CONNECTION_START, payload: wsUrl + '/all' });
+    return () => {
+      dispatch({ type: WS_CONNECTION_CLOSE });
+    };
   }, [dispatch]);
   const { orders, total, totalToday, wsConnected } = useSelector((store) => store.wsFeed);
-  return (
-    wsConnected?
-    (<div>
+  return wsConnected ? (
+    <div>
       <h1>Лента Заказов</h1>
       <div className={`${Styles.ordersTape}`}>
         <div className={`${Styles.tape} pr-2 mr-15`}>
           {orders.map((item) => {
             return (
               <Order
-                key={uuidv4()}
+                key={item._id}
                 orderDate={item.updatedAt}
                 orderNumber={item.number}
                 burgerIngredientsId={item.ingredients}
@@ -39,15 +40,28 @@ const Feed: FC = () => {
               <span className={`text text_type_main-medium mb-6`}>Готовы:</span>
               <div className={Styles.orders}>
                 {orders.map((item, index) => {
-                  if(index>9) return null
-                  return item.status === 'done' ? <span key={uuidv4()} className={`${Styles.doneOrders} ${index<5?Styles.firstColumn:Styles.secondColumn} text text_type_digits-default mb-2 mr-2`}>{item.number}</span> : null;
+                  if (index > 9) return null;
+                  return item.status === 'done' ? (
+                    <span
+                      key={item._id}
+                      className={`${Styles.doneOrders} ${
+                        index < 5 ? Styles.firstColumn : Styles.secondColumn
+                      } text text_type_digits-default mb-2 mr-2`}
+                    >
+                      {item.number}
+                    </span>
+                  ) : null;
                 })}
               </div>
             </div>
             <div className={`${Styles.ordersInfoBlock}`}>
               <span className={`text text_type_main-medium mb-6`}>В работе:</span>
               {orders.map((item) => {
-                return item.status !== 'done' ? <p key={uuidv4()} className={`text text_type_digits-default mb-2`}>{item.number}</p> : null;
+                return item.status !== 'done' ? (
+                  <p key={item._id} className={`text text_type_digits-default mb-2`}>
+                    {item.number}
+                  </p>
+                ) : null;
               })}
             </div>
           </div>
@@ -61,8 +75,9 @@ const Feed: FC = () => {
           </div>
         </div>
       </div>
-    </div>)
-    :(<Loading/>)
+    </div>
+  ) : (
+    <Loading />
   );
 };
 export default Feed;

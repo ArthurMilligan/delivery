@@ -1,4 +1,4 @@
-import { AppThunk, AppDispatch } from './../types/index';
+import { AppThunk } from './../types/index';
 import { GET_ITEMS, GET_ITEMS_FAILED, GET_ITEMS_SUCCESS } from './../constans/items-actions-constans';
 import { checkResponse } from '../../utils/check-response';
 import { baseUrl } from '../../utils/url';
@@ -30,7 +30,7 @@ export interface IItem {
 export type TItemsActions = TGetItemsAction | TGetItemsFailedAction | TGetItemsSuccessAction;
 
 const dataUrl = baseUrl + '/ingredients';
-export const getItems: AppThunk = () => (dispatch: AppDispatch) => {
+export const getItems: AppThunk = () => (dispatch) => {
   dispatch({
     type: GET_ITEMS,
   });

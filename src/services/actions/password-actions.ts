@@ -1,4 +1,4 @@
-import { AppThunk, AppDispatch } from './../types/index';
+import { AppThunk } from './../types/index';
 import { checkResponse } from '../../utils/check-response';
 import {
   FORGOT_PASSWORD,
@@ -47,7 +47,7 @@ export type TPasswordActions =
   | IResetPasswordEndAction
   | IResetPasswordFailedAction;
 
-export const forgotPassword: AppThunk = (email: string) => (dispatch: AppDispatch) => {
+export const forgotPassword: AppThunk = (email: string) => (dispatch) => {
   dispatch({ type: FORGOT_PASSWORD });
   fetch(forgotPasswordUrl, {
     method: 'POST',
@@ -81,7 +81,7 @@ export const forgotPassword: AppThunk = (email: string) => (dispatch: AppDispatc
 };
 export const resetPassword: AppThunk =
   ({ password, token }: { password: string; token: string }) =>
-  (dispatch: AppDispatch) => {
+  (dispatch) => {
     dispatch({ type: RESET_PASSSWORD });
     fetch(resetPasswordUrl, {
       method: 'POST',

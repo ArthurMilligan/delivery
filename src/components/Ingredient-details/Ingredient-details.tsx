@@ -6,12 +6,11 @@ import { DELETE_ITEM_INFORMATION } from '../../services/constans/modal-item-cons
 import { useParams } from 'react-router-dom';
 import { getItems } from '../../services/actions/items-actions';
 import NotFound404 from '../../pages/not-found-404/not-found-404';
-import { IItem } from '../../utils/types';
 
 const IngredientDetails: FC = ({ ...props }) => {
   const dispatch = useDispatch();
   const { id } = useParams<{ id?: string }>();
-  const ingredients: Array<IItem> = useSelector((store) => store.items.items);
+  const ingredients = useSelector((store) => store.items.items);
   const currentIngredient = ingredients.filter((ingredient) => ingredient._id === id)[0];
   useEffect(() => {
     if (!ingredients.length) {

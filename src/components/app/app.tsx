@@ -24,7 +24,7 @@ export interface IResponseStatus {
 const App: FC = () => {
   const dispatch = useDispatch();
 
-  const responseStatus: IResponseStatus = useSelector(store => ({
+  const responseStatus = useSelector((store) => ({
     itemsRequest: store.items.itemsRequest,
     itemsRequestFailed: store.items.itemsRequestFailed,
   }));
@@ -54,7 +54,7 @@ const App: FC = () => {
                   <SignIn />
                 </ProtectedRouteLogined>
                 <ProtectedRoute path='/profile/orders/:id'>
-                  <CreatedOrderDetails/>
+                  <CreatedOrderDetails />
                 </ProtectedRoute>
                 <ProtectedRoute path='/profile'>
                   <Profile />
@@ -63,7 +63,7 @@ const App: FC = () => {
                   <IngredientDetails />
                 </Route>
                 <Route path='/feed/:id'>
-                  <CreatedOrderDetails/>
+                  <CreatedOrderDetails isFeed={true} />
                 </Route>
                 <Route path='/feed'>
                   <Feed />

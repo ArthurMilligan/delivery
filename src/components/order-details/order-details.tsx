@@ -1,16 +1,15 @@
 import { FC, useEffect } from 'react';
 import style from './order-details.module.css';
 import done from '../../images/done.png';
-import { useDispatch, useSelector} from '../../services/types/hooks';
+import { useDispatch, useSelector } from '../../services/types/hooks';
 import { getOrder } from '../../services/actions/order-actions';
 import Loading from '../loading/loading';
-import { IBun, IIngredient, IOrder } from '../../utils/types';
 
 const OrderDetails: FC = () => {
   const dispatch = useDispatch();
-  const constructorData: Array<IIngredient> = useSelector((store) => store.cart.ingredients);
-  const bun: IBun = useSelector((store) => store.cart.bun);
-  const order: IOrder = useSelector((store) => store.order);
+  const constructorData = useSelector((store) => store.cart.ingredients);
+  const bun = useSelector((store) => store.cart.bun);
+  const order = useSelector((store) => store.order);
 
   useEffect(() => {
     const constructorDataToRequest = [bun.ingredient_id, ...constructorData.map((i) => i.ingredient_id), bun.ingredient_id];

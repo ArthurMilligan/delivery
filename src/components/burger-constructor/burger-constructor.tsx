@@ -7,14 +7,13 @@ import { useDrop } from 'react-dnd';
 import { GET_TOTAL_PRICE } from '../../services/constans/cart-constans';
 import { ADD_PRODUCT_ACTION_CREATOR } from '../../services/actions/cart-actions';
 import { NavLink, useLocation } from 'react-router-dom';
-import { IIngredient, IItem, IBun } from '../../utils/types';
 
 const BurgerConstructor: FC = () => {
   const location = useLocation();
-  const { ingredients, bun }: { ingredients: IIngredient[]; bun: IBun } = useSelector((store) => store.cart);
-  const items: Array<IItem> = useSelector((store) => store.items.items);
+  const { ingredients, bun } = useSelector((store) => store.cart);
+  const items = useSelector((store) => store.items.items);
   const dispatch = useDispatch();
-  const totalPrice: number = useSelector((store) => store.cart.totalPrice);
+  const totalPrice = useSelector((store) => store.cart.totalPrice);
   const [{ isHover }, dropTarget] = useDrop({
     accept: 'product',
     drop(item: { id: string }) {

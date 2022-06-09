@@ -6,7 +6,7 @@ import {
   WS_GET_MESSAGE,
   WS_SEND_MESSAGE,
   WS_CONNECTION_CLOSE,
-  WS_CLEAR_STATE
+  WS_CLEAR_STATE,
 } from '../constans/ws-constans';
 
 export interface IWsData {
@@ -25,7 +25,7 @@ export interface IWsOrder {
 }
 interface IWsConnectionStart {
   readonly type: typeof WS_CONNECTION_START;
-  readonly payload?: string;
+  readonly payload: string;
 }
 interface IWsConnectionSuccess {
   readonly type: typeof WS_CONNECTION_SUCCESS;
@@ -48,13 +48,13 @@ interface IWsSendMessage {
   readonly type: typeof WS_SEND_MESSAGE;
   readonly payload: IWsData;
 }
-interface IWsConnectionClose{
+interface IWsConnectionClose {
   readonly type: typeof WS_CONNECTION_CLOSE;
   readonly payload?: string;
 }
-interface IWsClearState{
-  readonly type: typeof WS_CLEAR_STATE
-  readonly payload?:string
+interface IWsClearState {
+  readonly type: typeof WS_CLEAR_STATE;
+  readonly payload?: string;
 }
 export type TWsActions =
   | IWsConnectionStart
@@ -63,5 +63,5 @@ export type TWsActions =
   | IWsConnectionClosed
   | IWsGetMessage
   | IWsSendMessage
-  |IWsConnectionClose
-  |IWsClearState;
+  | IWsConnectionClose
+  | IWsClearState;

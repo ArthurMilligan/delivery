@@ -13,8 +13,8 @@ const ResetPassword: FC = () => {
     token: '',
   });
   const [visiblePassword, setVisiblePassword] = useState<boolean>(false);
-  const isPasswordReset: boolean = useSelector((store) => store.password.isPasswordReset);
-  const isRequest: boolean = useSelector((store) => store.password.resetPasswordRequest);
+  const isPasswordReset = useSelector((store) => store.password.isPasswordReset);
+  const isRequest = useSelector((store) => store.password.resetPasswordRequest);
   const dispatch = useDispatch();
   const location = useLocation<ILocationState>();
   const history = useHistory();

@@ -14,5 +14,5 @@ export const rootReducer = combineReducers({
   items: itemsReducer,
   modalItem: modalItemReducer,
   order: orderReducer,
-  wsFeed: wsReducer
+  wsFeed: wsReducer,
 });

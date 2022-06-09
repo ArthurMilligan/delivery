@@ -4,7 +4,7 @@ import { useSelector } from '../../services/types/hooks';
 import { useDrag } from 'react-dnd';
 import { NavLink, useLocation } from 'react-router-dom';
 import { FC } from 'react';
-import { ICart, IListElementProps } from '../../utils/types';
+import { IListElementProps } from '../../utils/types';
 
 const ListElement: FC<IListElementProps> = (props) => {
   const location = useLocation();
@@ -12,7 +12,7 @@ const ListElement: FC<IListElementProps> = (props) => {
     type: 'product',
     item: { id: props.id },
   });
-  const cart: Array<ICart> = [...useSelector((store) => store.cart.ingredients), useSelector((store) => store.cart.bun)];
+  const cart = [...useSelector((store) => store.cart.ingredients), useSelector((store) => store.cart.bun)];
   const count = cart.reduce((acc, a) => (a.name === props.name ? acc + 1 : acc), 0);
   return (
     <NavLink

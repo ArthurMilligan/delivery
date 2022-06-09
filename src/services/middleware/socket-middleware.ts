@@ -8,7 +8,7 @@ import {
   WS_GET_MESSAGE,
   WS_SEND_MESSAGE,
   WS_CONNECTION_CLOSE,
-  WS_CLEAR_STATE
+  WS_CLEAR_STATE,
 } from '../constans/ws-constans';
 import type { AppDispatch, TRootState } from '../types';
 import { wsUrl } from '../../utils/url';
@@ -22,15 +22,11 @@ export const socketMiddleware = (): Middleware => {
       const { type, payload } = action;
 
       if (type === WS_CONNECTION_CLOSE) {
-        dispatch({type:WS_CLEAR_STATE})
-        socket?.close(1000, 'change page')
+        dispatch({ type: WS_CLEAR_STATE });
+        socket?.close(1000, 'change page');
       }
-      if (type === WS_CONNECTION_START ){
-        if (payload){
-          socket = new WebSocket(wsUrl + '?token=' + payload);
-        }else{
-          socket = new WebSocket(wsUrl + '/all');
-        }
+      if (type === WS_CONNECTION_START) {
+        socket = new WebSocket(payload);
       }
       if (socket) {
         socket.onopen = (event) => {

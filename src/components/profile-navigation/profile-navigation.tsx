@@ -7,7 +7,7 @@ import { IProfileNavigationProps } from '../../utils/types';
 
 const ProfileNavigation: FC<IProfileNavigationProps> = ({ url }) => {
   const dispatch = useDispatch();
-  const {pathname} =useLocation()
+  const { pathname } = useLocation();
   const exitOnClick = () => {
     dispatch(logout());
   };
@@ -30,10 +30,10 @@ const ProfileNavigation: FC<IProfileNavigationProps> = ({ url }) => {
       </ul>
       <div className={`${Styles.description} mt-20`}>
         <p className='text text_type_main-default text_color_inactive'>
-          {pathname==='/profile'
-          ?'В этом разделе вы можете изменить свои персональные данные'
-          :'В этом разделе вы можете просмотреть свою историю заказов'}
-          </p>
+          {pathname === '/profile'
+            ? 'В этом разделе вы можете изменить свои персональные данные'
+            : 'В этом разделе вы можете просмотреть свою историю заказов'}
+        </p>
       </div>
     </nav>
   );

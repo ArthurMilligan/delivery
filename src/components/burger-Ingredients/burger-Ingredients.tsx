@@ -3,11 +3,10 @@ import SwitchPanel from '../switch-panel/switch-panel';
 import ListElement from '../list-element/list-element';
 import style from './burger-Ingredients.module.css';
 import { useSelector } from '../../services/types/hooks';
-import { IItem } from '../../utils/types';
 
 const BurgerIngredients: FC = (props) => {
   const [currentSwitchPanel, setCurrentSwitchPanel] = useState<string>('');
-  const items: Array<IItem> = useSelector((store) => store.items.items);
+  const items = useSelector((store) => store.items.items);
   const switchPanelCheckPoint = useRef<HTMLInputElement>(null);
   const buns = useRef<HTMLInputElement>(null);
   const sauces = useRef<HTMLInputElement>(null);

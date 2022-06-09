@@ -5,9 +5,9 @@ import { getUserInformation, updateToken } from '../../services/actions/auth-act
 import { ILocationState } from '../../utils/types';
 
 const ProtectedRouteLogined: FC<RouteProps & { children: ReactChild }> = ({ children, ...rest }) => {
-  const isAuth: boolean = useSelector((store) => store.auth.isAuth);
+  const isAuth = useSelector((store) => store.auth.isAuth);
   const location = useLocation<ILocationState>();
-  const getUserStatusFailed: boolean = useSelector((store) => store.auth.getUserInfo.getUserRequestFailed);
+  const getUserStatusFailed = useSelector((store) => store.auth.getUserInfo.getUserRequestFailed);
   const dispatch = useDispatch();
   const lastLocation = location && location.state && location.state.from;
   const pathname = lastLocation && location.state.from && location.state.from.pathname ? location.state.from.pathname : '/';
