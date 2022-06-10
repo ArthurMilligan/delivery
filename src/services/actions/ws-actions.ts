@@ -10,9 +10,11 @@ import {
 } from '../constans/ws-constans';
 
 export interface IWsData {
+  success: boolean;
   orders: Array<IWsOrder>;
   total: number;
   totalToday: number;
+  message?: string;
 }
 export interface IWsOrder {
   ingredients: Array<string>;

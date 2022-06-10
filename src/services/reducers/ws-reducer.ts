@@ -33,13 +33,22 @@ export const wsReducer = (state = initialState, action: TWsActions): TWsState =>
       };
 
     case WS_GET_MESSAGE:
-      return {
-        ...state,
-        error: undefined,
-        orders: [...action.payload.orders],
-        total: action.payload.total,
-        totalToday: action.payload.totalToday,
-      };
+      if (action.payload.success) {
+        return {
+          ...state,
+          error: undefined,
+          orders: [...action.payload.orders],
+          total: action.payload.total,
+          totalToday: action.payload.totalToday,
+        };
+      } else {
+        return {
+          ...state,
+          error: action.payload.message,
+          total: action.payload.total,
+          totalToday: action.payload.totalToday,
+        };
+      }
     case WS_CLEAR_STATE:
       return {
         wsConnected: false,

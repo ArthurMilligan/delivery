@@ -7,15 +7,15 @@ import { RouteProps } from 'react-router';
 const ProtectedRoute: FC<RouteProps & { children: ReactChild }> = ({ children, ...rest }) => {
   const isAuth = useSelector((store) => store.auth.isAuth);
   const location = useLocation();
-  const getUserStatusFailed = useSelector((store) => store.auth.getUserInfo.getUserRequestFailed);
-  const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch(getUserInformation());
-    if (getUserStatusFailed) {
-      dispatch(updateToken());
-      dispatch(getUserInformation());
-    }
-  }, []);
+  // const getUserStatusFailed = useSelector((store) => store.auth.getUserInfo.getUserRequestFailed);
+  // const dispatch = useDispatch();
+  // useEffect(() => {
+  //   dispatch(getUserInformation());
+  //   if (getUserStatusFailed) {
+  //     dispatch(updateToken());
+  //     dispatch(getUserInformation());
+  //   }
+  // }, [isAuth]);
   return (
     <Route
       {...rest}

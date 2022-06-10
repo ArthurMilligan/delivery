@@ -5,5 +5,5 @@ export type TWsState = {
   orders: Array<IWsOrder>;
   total: number;
   totalToday: number;
-  error?: Event;
+  error?: Event | string;
 };

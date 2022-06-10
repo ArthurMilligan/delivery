@@ -12,6 +12,7 @@ import NotFound404 from '../../pages/not-found-404/not-found-404';
 import { wsUrl } from '../../utils/url';
 import { getCookie } from '../../utils/cookie';
 import { getUserInformation, updateToken } from '../../services/actions/auth-actions';
+import Loading from '../loading/loading';
 export interface ICreatedOrderDetailsProps {
   isFeed?: boolean;
 }
@@ -35,7 +36,7 @@ const CreatedOrderDetails: FC<ICreatedOrderDetailsProps> = ({ isFeed }) => {
     }
     if (!wsConnected) {
       if (isFeed) {
-        dispatch({ type: WS_CONNECTION_START, payload: wsUrl + 'all' });
+        dispatch({ type: WS_CONNECTION_START, payload: wsUrl + '/all' });
       }
       if (!isFeed && accessToken) {
         dispatch({ type: WS_CONNECTION_START, payload: wsUrl + accessToken });
@@ -43,7 +44,7 @@ const CreatedOrderDetails: FC<ICreatedOrderDetailsProps> = ({ isFeed }) => {
     }
   }, []);
   if (!currentOrder) {
-    return <NotFound404 />;
+    return orders.length ? <NotFound404 /> : <Loading />;
   }
   const mapIngredients: Array<ImapIngredient> = [];
   currentOrder?.ingredients.forEach((item) => {
