@@ -1,10 +1,8 @@
-import {
-  GET_ORDER_SUCCESS,
-  GET_ORDER_FAILED,
-  GET_ORDER,
-} from '../actions/order-actions';
+import { IOrderState } from './../types/order-reducers-types';
+import { TOrderActions } from './../actions/order-actions';
+import { GET_ORDER_SUCCESS, GET_ORDER_FAILED, GET_ORDER } from '../constans/order-constans';
 
-const initialState = {
+const initialState: IOrderState = {
   orderDetails: {
     number: 1213,
     name: '',
@@ -13,7 +11,7 @@ const initialState = {
   orderRequestFailed: false,
 };
 
-export const orderReducer = (state = initialState, action) => {
+export const orderReducer = (state = initialState, action: TOrderActions): IOrderState => {
   switch (action.type) {
     case GET_ORDER: {
       return {

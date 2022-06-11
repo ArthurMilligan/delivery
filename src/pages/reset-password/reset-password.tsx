@@ -1,9 +1,6 @@
-import {
-  Input,
-  Button,
-} from '@ya.praktikum/react-developer-burger-ui-components';
+import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import { FC, useCallback, useState, ChangeEvent, FormEvent } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from '../../services/types/hooks';
 import { Redirect, Route, useHistory, useLocation } from 'react-router-dom';
 import Loading from '../../components/loading/loading';
 import { resetPassword } from '../../services/actions/password-actions';
@@ -16,12 +13,8 @@ const ResetPassword: FC = () => {
     token: '',
   });
   const [visiblePassword, setVisiblePassword] = useState<boolean>(false);
-  const isPasswordReset: boolean = useSelector(
-    (store: any) => store.password.isPasswordReset
-  );
-  const isRequest: boolean = useSelector(
-    (store: any) => store.password.resetPasswordRequest
-  );
+  const isPasswordReset = useSelector((store) => store.password.isPasswordReset);
+  const isRequest = useSelector((store) => store.password.resetPasswordRequest);
   const dispatch = useDispatch();
   const location = useLocation<ILocationState>();
   const history = useHistory();
@@ -33,8 +26,7 @@ const ResetPassword: FC = () => {
     dispatch(resetPassword({ ...resetData }));
   };
   const background = location && location.state && location.state.from;
-  const pathname =
-    background && location.state.from ? location.state.from.pathname : '';
+  const pathname = background && location.state.from ? location.state.from.pathname : '';
   if (!background || pathname !== '/forgot-password') {
     return (
       <Redirect
@@ -66,9 +58,7 @@ const ResetPassword: FC = () => {
                 size={'default'}
                 icon={visiblePassword ? 'HideIcon' : 'ShowIcon'}
                 value={resetData.password}
-                onChange={(e:ChangeEvent<HTMLInputElement>) =>
-                  setResetData({ ...resetData, password: e.target.value })
-                }
+                onChange={(e: ChangeEvent<HTMLInputElement>) => setResetData({ ...resetData, password: e.target.value })}
                 onIconClick={() => setVisiblePassword(!visiblePassword)}
               />
             </div>
@@ -81,9 +71,7 @@ const ResetPassword: FC = () => {
                 errorText={'Ошибка'}
                 size={'default'}
                 value={resetData.token}
-                onChange={(e:ChangeEvent<HTMLInputElement>) =>
-                  setResetData({ ...resetData, token: e.target.value })
-                }
+                onChange={(e: ChangeEvent<HTMLInputElement>) => setResetData({ ...resetData, token: e.target.value })}
               />
             </div>
             <div className='mt-6'>
@@ -93,9 +81,7 @@ const ResetPassword: FC = () => {
             </div>
           </form>
           <div className='mt-20'>
-            <span className='text text_type_main-default text_color_inactive'>
-              Вспомнили пароль?
-            </span>
+            <span className='text text_type_main-default text_color_inactive'>Вспомнили пароль?</span>
             <Button type='secondary' size='medium' onClick={loginOnClick}>
               Войти
             </Button>

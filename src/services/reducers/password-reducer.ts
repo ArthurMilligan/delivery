@@ -1,3 +1,4 @@
+import { IPasswordState } from './../types/password-reducer-types';
 import {
   FORGOT_PASSWORD,
   FORGOT_PASSWORD_END,
@@ -7,9 +8,10 @@ import {
   RESET_PASSSWORD_END,
   RESET_PASSSWORD_FAILED,
   RESET_PASSSWORD_SUCCESS,
-} from '../actions/password-actions';
+} from '../constans/password-constans';
+import { TPasswordActions } from '../actions/password-actions';
 
-const initialState = {
+const initialState: IPasswordState = {
   isResetEmailSent: false,
   forgotPasswordRequest: false,
   forgotPasswordRequestFailed: false,
@@ -17,7 +19,7 @@ const initialState = {
   resetPasswordRequest: false,
   resetPasswordRequestFailed: false,
 };
-export const passwordReducer = (state = initialState, action) => {
+export const passwordReducer = (state = initialState, action: TPasswordActions): IPasswordState => {
   switch (action.type) {
     case FORGOT_PASSWORD:
       return {

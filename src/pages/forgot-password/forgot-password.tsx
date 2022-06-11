@@ -1,9 +1,6 @@
-import {
-  Input,
-  Button,
-} from '@ya.praktikum/react-developer-burger-ui-components';
+import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import { ChangeEvent, FC, FormEvent, useCallback, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from '../../services/types/hooks';
 import { Redirect, Route, useHistory, useLocation } from 'react-router-dom';
 import Loading from '../../components/loading/loading';
 import { forgotPassword } from '../../services/actions/password-actions';
@@ -13,12 +10,8 @@ const ForgotPassword: FC = () => {
   const [email, setEmail] = useState<string>('');
   const dispatch = useDispatch();
   const location = useLocation();
-  const resetEmailSent: boolean = useSelector(
-    (store: any) => store.password.isResetEmailSent
-  );
-  const isRequest: boolean = useSelector(
-    (store: any) => store.password.forgotPasswordRequest
-  );
+  const resetEmailSent = useSelector((store) => store.password.isResetEmailSent);
+  const isRequest = useSelector((store) => store.password.forgotPasswordRequest);
   const history = useHistory();
   const loginOnClick = useCallback(() => {
     history.replace({ pathname: '/login' });
@@ -42,15 +35,12 @@ const ForgotPassword: FC = () => {
       ) : (
         <div className={Styles.forgotPasswordBlock}>
           <h1 className='text text_type_main-medium'>Восстановление пароля</h1>
-          <form
-            className={Styles.forgotForm}
-            onSubmit={resetOnSubmit}
-          >
+          <form className={Styles.forgotForm} onSubmit={resetOnSubmit}>
             <div className='mt-6'>
               <Input
                 type={'text'}
                 value={email}
-                onChange={(e:ChangeEvent<HTMLInputElement>) => setEmail(e.target.value)}
+                onChange={(e: ChangeEvent<HTMLInputElement>) => setEmail(e.target.value)}
                 placeholder={'email'}
                 name={'name'}
                 error={false}
@@ -65,9 +55,7 @@ const ForgotPassword: FC = () => {
             </div>
           </form>
           <div className='mt-20'>
-            <span className='text text_type_main-default text_color_inactive'>
-              Вспомнили пароль?
-            </span>
+            <span className='text text_type_main-default text_color_inactive'>Вспомнили пароль?</span>
             <Button type='secondary' size='medium' onClick={loginOnClick}>
               Войти
             </Button>

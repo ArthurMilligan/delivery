@@ -1,3 +1,5 @@
+import { IAuthState } from './../types/auth-reducers-types';
+import { TAuthActions } from './../actions/auth-actions';
 import {
   GET_USER_INFORMATION,
   GET_USER_INFORMATION_FAILED,
@@ -16,9 +18,9 @@ import {
   UPDATE_USER_INFORMATION,
   UPDATE_USER_INFORMATION_FAILED,
   UPDATE_USER_INFORMATION_SUCCESS,
-} from '../actions/auth-actions';
+} from '../constans/auth-constans';
 
-const initialState = {
+const initialState: IAuthState = {
   isAuth: false,
   userInformation: {
     email: '',
@@ -46,7 +48,7 @@ const initialState = {
     updateTokenRequestFailed: false,
   },
 };
-export const authReducer = (state = initialState, action) => {
+export const authReducer = (state = initialState, action: TAuthActions): IAuthState => {
   switch (action.type) {
     case REGISTRATION:
       return {
@@ -148,7 +150,7 @@ export const authReducer = (state = initialState, action) => {
           getUserRequestFailed: false,
         },
       };
-    case UPDATE_USER_INFORMATION:
+    case UPDATE_USER_INFORMATION_SUCCESS:
       return {
         ...state,
         isAuth: true,
@@ -157,7 +159,7 @@ export const authReducer = (state = initialState, action) => {
           name: action.name,
         },
         updateUserInfo: {
-          updateUserRequest: true,
+          updateUserRequest: false,
           updateUserRequestFailed: false,
         },
       };
@@ -169,11 +171,11 @@ export const authReducer = (state = initialState, action) => {
           updateUserRequestFailed: true,
         },
       };
-    case UPDATE_USER_INFORMATION_SUCCESS:
+    case UPDATE_USER_INFORMATION:
       return {
         ...state,
         updateUserInfo: {
-          updateUserRequest: false,
+          updateUserRequest: true,
           updateUserRequestFailed: false,
         },
       };

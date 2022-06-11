@@ -8,8 +8,10 @@ import { IModalProps } from '../../utils/types';
 const modal = document.getElementById('modal');
 
 const Modal: FC<IModalProps> = (props) => {
-  const pressEscListener = useCallback(() => {
-    props.onClose();
+  const pressEscListener = useCallback((e) => {
+    if (e.key === 'Escape') {
+      props.onClose();
+    }
   }, []);
   useEffect(() => {
     document.addEventListener('keydown', pressEscListener, false);

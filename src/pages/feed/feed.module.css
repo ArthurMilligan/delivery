@@ -1,0 +1,51 @@
+.ordersTape {
+  display: flex;
+}
+
+.tape {
+  width: 600px;
+}
+
+.tape {
+  overflow-y: scroll;
+  overflow-x: hidden;
+  height: 70vh;
+}
+
+.description {
+  width: 600px;
+}
+
+.ordersInfo {
+  display: flex;
+}
+.ordersInfoBlock {
+  width: 40%;
+}
+
+.doneOrders {
+  color: #00cccc;
+}
+
+.orders {
+  height: 20vh;
+}
+
+.tape::-webkit-scrollbar {
+  width: 8px;
+}
+
+.tape::-webkit-scrollbar-track {
+  background: #2f2f37;
+}
+
+.tape::-webkit-scrollbar-thumb {
+  background-color: #8585ad;
+}
+
+.firstColumn {
+  display: inline-block;
+}
+.secondColumn {
+  display: inline-block;
+}

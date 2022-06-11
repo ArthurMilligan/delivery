@@ -1,7 +1,6 @@
 import { FC, useEffect } from 'react';
 import AppHeader from '../app-header/app-header';
 import style from './app.module.css';
-import { useDispatch, useSelector } from 'react-redux';
 import { getItems } from '../../services/actions/items-actions';
 import Profile from '../../pages/profile/profile';
 import SignIn from '../../pages/sign-in/sign-in';
@@ -15,6 +14,9 @@ import IngredientDetails from '../Ingredient-details/Ingredient-details';
 import { ModalSwitch } from '../modal-switch/modal-switch';
 import NotFound404 from '../../pages/not-found-404/not-found-404';
 import Constructor from '../../pages/constructor/constructor';
+import Feed from '../../pages/feed/feed';
+import CreatedOrderDetails from '../created-order-details/created-order-details';
+import { useDispatch, useSelector } from '../../services/types/hooks';
 export interface IResponseStatus {
   itemsRequest: boolean;
   itemsRequestFailed: boolean;
@@ -22,7 +24,7 @@ export interface IResponseStatus {
 const App: FC = () => {
   const dispatch = useDispatch();
 
-  const responseStatus: IResponseStatus = useSelector((store: any) => ({
+  const responseStatus = useSelector((store) => ({
     itemsRequest: store.items.itemsRequest,
     itemsRequestFailed: store.items.itemsRequestFailed,
   }));
@@ -51,11 +53,20 @@ const App: FC = () => {
                 <ProtectedRouteLogined path='/login'>
                   <SignIn />
                 </ProtectedRouteLogined>
+                <ProtectedRoute path='/profile/orders/:id'>
+                  <CreatedOrderDetails />
+                </ProtectedRoute>
                 <ProtectedRoute path='/profile'>
                   <Profile />
                 </ProtectedRoute>
                 <Route path='/ingredients/:id'>
                   <IngredientDetails />
+                </Route>
+                <Route path='/feed/:id'>
+                  <CreatedOrderDetails isFeed={true} />
+                </Route>
+                <Route path='/feed'>
+                  <Feed />
                 </Route>
                 <Route exact={true} path='/'>
                   <Constructor />

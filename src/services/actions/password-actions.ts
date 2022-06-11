@@ -1,20 +1,53 @@
+import { AppThunk } from './../types/index';
 import { checkResponse } from '../../utils/check-response';
-import { baseUrl } from '../../utils/url';
+import {
+  FORGOT_PASSWORD,
+  FORGOT_PASSWORD_SUCCESS,
+  FORGOT_PASSWORD_FAILED,
+  FORGOT_PASSWORD_END,
+  RESET_PASSSWORD,
+  RESET_PASSSWORD_SUCCESS,
+  RESET_PASSSWORD_END,
+  RESET_PASSSWORD_FAILED,
+  forgotPasswordUrl,
+  resetPasswordUrl,
+} from '../constans/password-constans';
 
-export const FORGOT_PASSWORD = 'FORGOT_PASSWORD';
-export const FORGOT_PASSWORD_SUCCESS = 'FORGOT_PASSWORD_SUCCESS';
-export const FORGOT_PASSWORD_FAILED = 'FORGOT_PASSWORD_FAILED';
-export const FORGOT_PASSWORD_END = 'FORGOT_PASSWORD_END';
+interface IForgotPasswordAction {
+  readonly type: typeof FORGOT_PASSWORD;
+}
+interface IForgotPasswordSuccessAction {
+  readonly type: typeof FORGOT_PASSWORD_SUCCESS;
+}
+interface IForgotPasswordFailedAction {
+  readonly type: typeof FORGOT_PASSWORD_FAILED;
+}
+interface IForgotPasswordEndAction {
+  readonly type: typeof FORGOT_PASSWORD_END;
+}
+interface IResetPasswordAction {
+  readonly type: typeof RESET_PASSSWORD;
+}
+interface IResetPassworSuccessdAction {
+  readonly type: typeof RESET_PASSSWORD_SUCCESS;
+}
+interface IResetPasswordFailedAction {
+  readonly type: typeof RESET_PASSSWORD_FAILED;
+}
+interface IResetPasswordEndAction {
+  readonly type: typeof RESET_PASSSWORD_END;
+}
+export type TPasswordActions =
+  | IForgotPasswordAction
+  | IForgotPasswordEndAction
+  | IForgotPasswordFailedAction
+  | IForgotPasswordSuccessAction
+  | IResetPassworSuccessdAction
+  | IResetPasswordAction
+  | IResetPasswordEndAction
+  | IResetPasswordFailedAction;
 
-export const RESET_PASSSWORD = 'RESET_PASSWORD';
-export const RESET_PASSSWORD_SUCCESS = 'RESET_PASSWORD_SUCCESS';
-export const RESET_PASSSWORD_FAILED = 'RESET_PASSWORD_FAILED';
-export const RESET_PASSSWORD_END = 'RESET_PASSSWORD_END';
-
-const forgotPasswordUrl = baseUrl + '/password-reset';
-const resetPasswordUrl = baseUrl + '/password-reset/reset';
-
-export const forgotPassword = (email) => (dispatch) => {
+export const forgotPassword: AppThunk = (email: string) => (dispatch) => {
   dispatch({ type: FORGOT_PASSWORD });
   fetch(forgotPasswordUrl, {
     method: 'POST',
@@ -46,8 +79,8 @@ export const forgotPassword = (email) => (dispatch) => {
       });
     });
 };
-export const resetPassword =
-  ({ password, token }) =>
+export const resetPassword: AppThunk =
+  ({ password, token }: { password: string; token: string }) =>
   (dispatch) => {
     dispatch({ type: RESET_PASSSWORD });
     fetch(resetPasswordUrl, {
