@@ -115,7 +115,7 @@ export const registration: AppThunk =
       name: name,
     };
     dispatch({ type: REGISTRATION });
-    fetch(registrationUrl, {
+    return fetch(registrationUrl, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

@@ -14,6 +14,7 @@
     "@ya.praktikum/react-developer-burger-ui-components": "^1.13.1",
     "axios": "^0.26.0",
     "history": "^5.3.0",
+    "node-fetch": "^3.2.6",
     "react": "^17.0.2",
     "react-dnd": "^15.1.1",
     "react-dnd-html5-backend": "^15.1.2",
@@ -34,8 +35,12 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "prepare": "husky install",
-    "format": "npx prettier --write ."
+    "format": "npx prettier --write .",
+    "cypress:open": "./node_modules/.bin/cypress open",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
   },
+  "homepage": "https://arthurmilligan.github.io/delivery/", 
   "eslintConfig": {
     "extends": [
       "react-app",
@@ -55,14 +60,22 @@
     ]
   },
   "devDependencies": {
+    "@types/enzyme": "^3.10.12",
     "@types/history": "^5.0.0",
     "@types/react-dnd": "^3.0.2",
     "@types/react-redux": "^7.1.24",
     "@types/react-router-dom": "^5.3.3",
     "@types/redux-devtools": "^3.7.0",
+    "@types/redux-mock-store": "^1.0.3",
     "@types/uuid": "^8.3.4",
+    "@wojtekmaj/enzyme-adapter-react-17": "^0.6.7",
+    "cypress": "^10.2.0",
+    "enzyme": "^3.11.0",
+    "fetch-mock": "^9.11.0",
+    "gh-pages": "^4.0.0",
     "husky": "^8.0.1",
     "prettier": "2.6.2",
-    "redux-devtools-extension": "^2.13.9"
+    "redux-devtools-extension": "^2.13.9",
+    "redux-mock-store": "^1.5.4"
   }
 }

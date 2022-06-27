@@ -59,7 +59,9 @@ export interface IModalProps {
 }
 export interface IModalOverlayProps extends IModalProps {}
 export interface ILocationState {
-  from?: { pathname?: string };
+  from?: { pathname?: string, state?:{
+    from?: { pathname?: string}
+  } };
   background?: Location;
 }
 export interface ISwitchPanelProps {
