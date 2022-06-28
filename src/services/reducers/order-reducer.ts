@@ -4,7 +4,7 @@ import { GET_ORDER_SUCCESS, GET_ORDER_FAILED, GET_ORDER } from '../constans/orde
 
 const initialState: IOrderState = {
   orderDetails: {
-    number: 1213,
+    number: 0,
     name: '',
   },
   orderRequest: false,

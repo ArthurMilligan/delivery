@@ -37,7 +37,7 @@ const App: FC = () => {
     <>
       {!responseStatus.itemsRequest && !responseStatus.itemsRequestFailed ? (
         <>
-          <Router>
+          <Router basename='/delivery'>
             <AppHeader />
             <main className={style.main}>
               <ModalSwitch>
